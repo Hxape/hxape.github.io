@@ -1,0 +1,188 @@
+/* Окно токенов использует цвета страницы и остаётся оформленным после переноса в PiP. */
+.token-dialog {
+  width: min(480px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 18px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 18px 50px var(--shadow);
+  font: inherit;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+.token-dialog:focus,
+.token-dialog:focus-visible {
+  outline: none;
+}
+
+.token-dialog::backdrop {
+  background: var(--backdrop);
+}
+
+.token-manager {
+  --stack-gap: 12px;
+}
+
+.token-manager [hidden] {
+  display: none;
+}
+
+.token-manager h2 {
+  font-size: calc(15px + var(--font-increase, 0px));
+}
+
+.token-manager p,
+.token-manager ol {
+  margin: 0;
+}
+
+.token-auto-passkey {
+  cursor: pointer;
+}
+
+.token-auto-passkey input {
+  margin: 0;
+  accent-color: var(--muted);
+}
+
+.token-manager ol {
+  padding-left: 1.5em;
+}
+
+.token-manager summary {
+  --control-gap: 7px;
+  padding: 4px 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.token-manager summary::-webkit-details-marker {
+  display: none;
+}
+
+.token-manager summary:hover {
+  color: var(--strong);
+}
+
+.token-add-chevron .control-icon {
+  --icon-size: 13px;
+  transform: rotate(180deg);
+}
+
+.token-manager details[open] .token-add-chevron .control-icon {
+  transform: rotate(270deg);
+}
+
+.token-add-body {
+  padding: 8px 0 0;
+}
+
+.token-manager form>label {
+  --stack-gap: 4px;
+}
+
+.token-manager fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+.token-manager fieldset label {
+  --control-gap: 5px;
+}
+
+.token-manager input[type="radio"] {
+  accent-color: var(--muted);
+}
+
+.token-manager .token-close,
+.token-manager .token-close:hover,
+.token-close .control-icon {
+  --icon-size: 22px;
+}
+
+.token-manager .token-icon-button {
+  border-radius: 5px;
+  font: inherit;
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+
+.token-manager .token-icon-button:hover {
+  color: var(--strong);
+}
+
+.token-icon-button .control-icon {
+  --icon-size: 28px;
+}
+
+.token-icon-button[data-token-action="remove"] .control-icon {
+  --icon-size: 21px;
+}
+
+.token-manager button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.token-manager :is(button, a, summary, input[type="radio"], input[type="checkbox"]):focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.token-manager input:is([type="text"], [type="password"]):focus-visible {
+  outline: 1px solid var(--muted);
+  outline-offset: 0;
+}
+
+.token-manager #token-status {
+  overflow-wrap: anywhere;
+}
+
+.token-manager #token-status:empty {
+  display: none;
+}
+
+/* Строка токена не раскрывает PAT: в списке только имя, дата и действия. */
+#token-list {
+  --stack-gap: 6px;
+}
+
+#token-list[hidden] {
+  display: none;
+}
+
+#token-list li {
+  --control-gap: 6px;
+  flex-wrap: wrap;
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+#token-list .token-info {
+  flex: 1 1 12ch;
+  min-width: 0;
+}
+
+#token-list .token-label,
+#token-list .token-added {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+#token-list .token-added {
+  font-size: .85em;
+}
+
+#token-list input {
+  flex: 1 1 12ch;
+}

@@ -1,0 +1,675 @@
+@import url('./atoms.css');
+@import url('./icons.css');
+
+/* Shadow DOM отделяет кнопки настроек от правил терминала. */
+:host {
+  display: block;
+  font: inherit;
+  color: inherit;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::marker {
+  content: '';
+}
+
+/* Постоянные действия верхней и нижней панели. */
+.header-tools {
+  justify-self: end;
+}
+
+.header-tools>li {
+  position: relative;
+}
+
+.font-controls {
+  display: flex;
+  gap: 1px;
+}
+
+.font-controls button,
+.theme-button,
+.token-button,
+.update-button,
+.navigation-button {
+  width: 24px;
+  height: 28px;
+}
+
+.font-controls button:hover:not(:disabled),
+.theme-button:hover,
+.token-button:hover,
+.update-button:hover:not(:disabled),
+.navigation-button:hover {
+  color: var(--strong);
+}
+
+.font-controls button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+#font-smaller .control-icon {
+  --icon-size: 14px;
+}
+
+#font-larger .control-icon {
+  --icon-size: 19px;
+}
+
+.theme-button .control-icon {
+  --icon-size: 17px;
+}
+
+.theme-button {
+  opacity: var(--theme-opacity, 1);
+}
+
+.token-button .control-icon {
+  --icon-size: 17px;
+}
+
+.update-button:disabled {
+  cursor: default;
+}
+
+#site-update-header {
+  opacity: var(--update-opacity, 1);
+}
+
+#site-update-header:is([data-control-state="download"], [data-control-state="success"]) {
+  opacity: var(--theme-opacity, 1);
+}
+
+#site-update-header .control-icon {
+  --icon-size: 18px;
+}
+
+/* Цвета открываются в одном меню, но акцент и заливка mark хранятся отдельно. */
+.accent-controls:not([hidden]) {
+  --control-gap: 5px;
+}
+
+.accent-menu {
+  position: relative;
+}
+
+.accent-swatch {
+  width: 24px;
+  height: 28px;
+  margin: 0;
+  list-style: none;
+  box-shadow: none;
+}
+
+.accent-swatch::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .accent-swatch::before {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.accent-swatch:focus-visible,
+.accent-reset:focus-visible {
+  outline: none;
+}
+
+
+.accent-reset {
+  width: 24px;
+  height: 26px;
+}
+
+.accent-reset:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.accent-reset:hover:not(:disabled) {
+  color: var(--accent);
+}
+
+.accent-reset svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.accent-picker {
+  --popover-padding: 16px;
+  width: 210px;
+}
+
+.accent-picker small {
+  font-size: calc(10px + var(--font-increase, 0px));
+}
+
+.accent-fields {
+  --control-gap: 10px;
+  margin: 12px 0 8px;
+}
+
+.preferences-popup .accent-fields {
+  margin: 0;
+}
+
+/* Подпись цвета располагается под текстом ввода справа и не меняет размер поля. */
+.color-value {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  --field-padding: 0;
+}
+
+.color-value .color-input-label {
+  position: absolute;
+  inset-inline-end: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-height: 0;
+  color: var(--muted);
+  opacity: .4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.color-value-input {
+  position: relative;
+  width: 100%;
+  height: calc(28px + var(--font-increase, 0px));
+  padding: 3px 8px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+}
+
+#accent-color,
+#mark-color {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  aspect-ratio: 1;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bar);
+  cursor: pointer;
+}
+
+#accent-color::-webkit-color-swatch-wrapper,
+#mark-color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#accent-color::-webkit-color-swatch,
+#mark-color::-webkit-color-swatch {
+  border: 0;
+}
+
+#accent-color::-moz-color-swatch,
+#mark-color::-moz-color-swatch {
+  border: 0;
+}
+
+#accent-hex,
+#mark-hex {
+  --field-padding: 6px 8px;
+}
+
+#accent-hex:focus,
+#mark-hex:focus {
+  outline: none;
+}
+
+.mark-option {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* Время подсветки — отдельное поле цвета; дискретный индекс и сообщения приходят из Preferences. */
+.source-highlight-control {
+  --stack-gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.source-highlight-control input {
+  --field-padding: 0;
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+}
+
+.source-highlight-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: none;
+  min-width: 4ch;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.source-highlight-value .control-icon {
+  --icon-size: 16px;
+}
+
+.source-highlight-status {
+  font-size: calc(10px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+.source-highlight-status:empty {
+  display: none;
+}
+
+/* Флаги значков влияют только на дерево, размеры кнопок постоянны. */
+.icons-menu {
+  position: relative;
+}
+
+.icons-menu>summary {
+  width: 24px;
+  height: 28px;
+  list-style: none;
+}
+
+.icons-menu>summary:hover {
+  color: var(--strong);
+}
+
+.icons-menu>summary .control-icon {
+  --icon-size: 18px;
+}
+
+.icons-popover {
+  width: 270px;
+}
+
+/* Единый popup преференсов прокручивает все поля в пределах текущего окна. */
+.preferences-popup {
+  width: min(320px, calc(100vw - 32px));
+  max-height: calc(100dvh - 160px);
+  overflow-y: auto;
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+/* Фокус показывает подсказку поля без нативной синей обводки. */
+.preferences-popup :focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.icon-option-icon:empty {
+  display: none;
+}
+
+.icon-option-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.preferences-popup .control-icon {
+  --icon-size: 24px;
+}
+
+.preferences-popup #font-smaller .control-icon {
+  --icon-size: 20px;
+}
+
+.preferences-popup #font-larger .control-icon {
+  --icon-size: 24px;
+}
+
+.preferences-appearance {
+  justify-content: space-between;
+  margin-block-end: 12px;
+}
+
+/* Управление шрифтом внутри открытого popup видно также при открытии клавишей I. */
+.preferences-popup .preferences-appearance .font-tool {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.preferences-popup small {
+  font-size: calc(10px + var(--font-increase, 0px));
+}
+
+.navigation-tool {
+  flex: none;
+}
+
+.navigation-button .control-icon {
+  --icon-size: 17px;
+}
+
+.navigation-tool:has(#site-link-mode) {
+  margin-right: 6px;
+}
+
+.icons-menu fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.icons-menu label {
+  --control-gap: 10px;
+  min-height: 24px;
+  font-size: calc(12px + var(--font-increase, 0px));
+  cursor: pointer;
+}
+
+.icons-menu input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.icons-menu .hold-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  cursor: default;
+}
+
+.hold-control span {
+  grid-column: 1 / -1;
+}
+
+.hold-control input {
+  width: 100%;
+}
+
+.hold-control output {
+  white-space: nowrap;
+}
+
+.organization-control {
+  --stack-gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.organization-control input {
+  width: 100%;
+  min-width: 0;
+  --field-padding: 3px 8px;
+  min-height: 28px;
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+.organization-control input:focus {
+  outline: none;
+}
+
+.organization-heading {
+  justify-content: space-between;
+}
+
+.organization-heading label {
+  flex: 1;
+  min-width: 0;
+}
+
+.organization-control small {
+  font-size: calc(10px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+.organization-status:empty {
+  display: none;
+}
+
+.organization-actions {
+  justify-content: flex-end;
+}
+
+.organization-actions button {
+  width: 28px;
+  height: 28px;
+}
+
+.organization-actions button:hover {
+  color: var(--strong);
+}
+
+.history-tree-control {
+  --stack-gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.history-tree-control select {
+  --field-padding: 3px 8px;
+  min-height: 28px;
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+.history-tree-control select:focus-visible {
+  outline: none;
+}
+
+.history-tree-control small {
+  font-size: calc(10px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+#history-tree-status:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .token-button,
+  .update-button,
+  .navigation-button,
+  .accent-reset,
+  .icons-menu>summary {
+    transition: color 160ms, background-color 160ms, box-shadow 160ms, opacity 160ms;
+  }
+
+  .theme-button {
+    transition: color 160ms, background-color 160ms, box-shadow 160ms, opacity 160ms;
+  }
+
+  .accent-swatch {
+    transition: background-color 160ms, border-color 160ms;
+  }
+}
+
+.popover-heading {
+  --control-gap: 12px;
+  justify-content: space-between;
+}
+
+.header-tools .accent-tool,
+.header-tools .icons-tool,
+.header-tools .font-tool {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header-tools:hover .accent-tool,
+.header-tools:focus-within .accent-tool,
+.accent-tool:has(details[open]),
+.header-tools:hover .icons-tool,
+.header-tools:focus-within .icons-tool,
+.icons-tool:has(details[open]),
+.header-tools:hover .font-tool,
+.header-tools:focus-within .font-tool {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:host([data-placement="header"][data-pointer-over]) .header-tools :is(.accent-tool, .icons-tool, .font-tool) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: none),
+(pointer: coarse) {
+
+  .header-tools .accent-tool,
+  .header-tools .icons-tool,
+  .header-tools .font-tool {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .accent-tool {
+    transition: opacity 160ms;
+  }
+}
+
+.token-button {
+  opacity: var(--theme-opacity, 1);
+}
+
+:host([data-placement="header"][data-pointer-over]) {
+  --theme-opacity: 1;
+  --update-opacity: 1;
+}
+
+/* При переносе того же элемента в footer увеличиваются только кнопки настроек. */
+:host([data-placement="footer"]) {
+  position: relative;
+  --theme-opacity: 1;
+  --update-opacity: 1;
+}
+
+:host([data-placement="footer"]) .header-tools {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+:host([data-placement="footer"]) :is(.font-controls button, .theme-button, .token-button, .update-button, .navigation-button, .accent-swatch, .icons-menu > summary) {
+  width: 44px;
+  height: 44px;
+}
+
+:host([data-placement="footer"]) #site-update-header .control-icon {
+  --icon-size: 21px;
+}
+
+:host([data-placement="footer"]) .navigation-button .control-icon {
+  --icon-size: 20px;
+}
+
+/* html отражает открытость информации: нижние дубли возвращаются в режиме дерева без пересоздания кнопок. */
+:host([data-placement="footer"]) .navigation-tool:has(:is(#site-bookmarks, #site-search)) {
+  display: var(--footer-journal-display, block);
+}
+
+/* Порог удержания подсвечивает ту же кнопку до отпускания; режим и таймер принадлежат Preferences. */
+[data-hold-ready] {
+  color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* html отражает наведение и видимый клавиатурный фокус; touch сохраняет исходные 1/auto. */
+:host([data-placement="header"]) .navigation-tool {
+  opacity: var(--site-navigation-opacity, 1);
+  pointer-events: var(--site-navigation-events, auto);
+}
+
+:host([data-placement="footer"]) .organization-control input {
+  min-height: 28px;
+}
+
+:host([data-placement="footer"]) .organization-actions button {
+  width: 44px;
+  height: 44px;
+  --icon-size: 21px;
+}
+
+:host([data-placement="footer"]) .history-tree-control select {
+  min-height: 28px;
+}
+
+:host([data-placement="footer"]) .accent-swatch::before {
+  width: 20px;
+  height: 20px;
+}
+
+:host([data-placement="footer"]) .icons-menu>summary .control-icon {
+  --icon-size: 20px;
+}
+
+:host([data-placement="footer"]) .icons-menu>summary svg {
+  width: 20px;
+  height: 20px;
+}
+
+:host([data-placement="footer"]) .theme-button .control-icon {
+  --icon-size: 20px;
+}
+
+:host([data-placement="footer"]) .token-button .control-icon {
+  --icon-size: 24px;
+}
+
+:host([data-placement="footer"]) :is(#font-smaller, #font-larger) .control-icon {
+  --icon-size: 22px;
+}
+
+:host([data-placement="footer"]) .header-tools .accent-tool,
+:host([data-placement="footer"]) .header-tools .font-tool,
+:host([data-placement="footer"]) .header-tools .icons-tool {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:host([data-placement="footer"]) .header-tools>li,
+:host([data-placement="footer"]) .accent-menu,
+:host([data-placement="footer"]) .icons-menu {
+  position: static;
+}
+
+:host([data-placement="footer"]) .accent-picker,
+:host([data-placement="footer"]) .icons-popover {
+  top: auto;
+  bottom: calc(100% + 10px);
+  right: 0;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 110px);
+  overflow: auto;
+}

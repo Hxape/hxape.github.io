@@ -1,0 +1,31 @@
+/* Полосы изменения ширины принадлежат таблице внутри прокручиваемого документа. */
+.document-table-scroll {
+  position: relative;
+  max-width: 100%;
+  overflow: auto;
+  margin: 0 0 .8em;
+}
+
+.document-html table.document-resizable {
+  display: table;
+  max-width: none;
+  margin: 0;
+  overflow: visible;
+}
+
+.document-column-resize {
+  position: absolute;
+  width: 8px;
+  transform: translateX(-50%);
+  outline: none;
+  cursor: col-resize;
+  touch-action: pan-y;
+  user-select: none;
+  pointer-events: none;
+}
+
+.document-column-resize>span {
+  position: absolute;
+  inset-inline: 0;
+  pointer-events: auto;
+}

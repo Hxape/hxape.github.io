@@ -1,0 +1,11 @@
+{
+  "loaderFailure": "Could not load the page loader.",
+  "stylesFailure": "Could not load page styles.",
+  "applicationFailure": "Could not load the interface.",
+  "fragmentFailure": "Could not load {name}.",
+  "loading": "Loading page… ",
+  "starting": "Starting interface… ",
+  "reload": "Reload page",
+  "retry": "Retry",
+  "github": "Hxape on GitHub"
+}

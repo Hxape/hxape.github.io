@@ -1,0 +1,253 @@
+<template id="search.form">
+  <form
+    class   = ${class}
+    role    = "search"
+    @submit = ${onSubmit}
+  >
+    <span
+      class       = "navigation-search-edge"
+      data-edge   = "top"
+      aria-hidden = "true"
+    ></span><span
+      class       = "navigation-search-edge"
+      data-edge   = "bottom"
+      aria-hidden = "true"
+    ></span><span
+      class       = "navigation-search-edge"
+      data-edge   = "start"
+      aria-hidden = "true"
+    ></span><span
+      class       = "navigation-search-edge"
+      data-edge   = "end"
+      aria-hidden = "true"
+    ></span>
+    <div class="navigation-search-row control-row">
+      <div class="navigation-search-field field primary">
+        <span
+          class       = "navigation-search-prefix"
+          aria-hidden = "true"
+        ></span>
+        <div class="navigation-search-edit">
+          <label
+            class = "sr-only"
+            for   = ${id}
+          >${label}</label>
+          <input
+            id             = ${id}
+            type           = "search"
+            class          = "field primary navigation-search-input"
+            data-tooltip   = ${label}
+            .value         = ${query}
+            placeholder    = ${placeholder}
+            autocomplete   = "off"
+            autocapitalize = "off"
+            spellcheck     = "false"
+            enterkeyhint   = "search"
+            @input         = ${onInput}
+            @keydown       = ${onKeydown}
+          >
+        </div>
+        <output
+          class       = "navigation-search-count muted"
+          for         = ${id}
+          aria-live   = "polite"
+          aria-atomic = "true"
+          aria-label  = ${countLabel}
+        >${current} / ${total}</output>
+      </div>
+      <menu
+        class      = "navigation-search-actions plain-list control-row"
+        aria-label = ${label}
+        @keydown   = ${onActionKeydown}
+      >
+        <li>
+          <button
+            type         = "button"
+            class        = "navigation-search-clear icon-button muted"
+            aria-label   = ${clearLabel}
+            data-tooltip = ${clearLabel}
+            ?disabled    = ${clearDisabled}
+            @click       = ${onClear}
+          >${clearIcon}</button>
+        </li>
+        <li>
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${previousLabel}
+            data-tooltip = ${previousLabel}
+            ?disabled    = ${noMatches}
+            @click       = ${onPrevious}
+          >${previousIcon}</button>
+        </li>
+        <li>
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${nextLabel}
+            data-tooltip = ${nextLabel}
+            ?disabled    = ${noMatches}
+            @click       = ${onNext}
+          >${nextIcon}</button>
+        </li>
+        <li ?hidden = ${selectionHidden}>
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${selectionLabel}
+            data-tooltip = ${selectionLabel}
+            aria-pressed = ${selectionPressed}
+            ?disabled    = ${selectionDisabled}
+            @click       = ${onToggleSelection}
+          >${selectionIcon}</button>
+        </li>
+        <li>
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${collectingLabel}
+            data-tooltip = ${collectingLabel}
+            aria-pressed = ${collectingPressed}
+            @click       = ${onToggleCollecting}
+          >${collectingIcon}</button>
+        </li>
+        <li>
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${historyLabel}
+            data-tooltip = ${historyLabel}
+            @click       = ${onHistory}
+          >${historyIcon}</button>
+        </li>
+        <li class="navigation-search-close">
+          <button
+            type         = "button"
+            class        = "icon-button muted"
+            aria-label   = ${closeLabel}
+            data-tooltip = ${closeLabel}
+            @click       = ${onClose}
+          >${closeIcon}</button>
+        </li>
+      </menu>
+    </div>
+  </form>
+</template>
+
+<template id="search.history">
+  <header class="navigation-heading bar">
+    <div class="navigation-heading-row control-row">
+      <h2 class="primary">${title}</h2>
+      <button
+        type         = "button"
+        class        = "icon-button muted"
+        aria-label   = ${exportLabel}
+        data-tooltip = ${exportLabel}
+        ?hidden      = ${exchangeHidden}
+        @click       = ${onExport}
+      >${exportIcon}</button>
+      <button
+        type         = "button"
+        class        = "icon-button muted"
+        aria-label   = ${importLabel}
+        data-tooltip = ${importLabel}
+        ?hidden      = ${exchangeHidden}
+        @click       = ${onImport}
+      >${importIcon}</button>
+      <button
+        type         = "button"
+        class        = "icon-button muted navigation-popup-close"
+        aria-label   = ${closeLabel}
+        data-tooltip = ${closeLabel}
+        @click       = ${onClose}
+      >${closeIcon}</button>
+    </div>
+  </header>
+  <p
+    class   = "navigation-message muted"
+    role    = "status"
+    ?hidden = ${messageHidden}
+  >${message}<button
+    type         = "button"
+    class        = "control primary"
+    ?hidden      = ${retryHidden}
+    data-tooltip = ${retryLabel}
+    @click       = ${onRetry}
+  >${retryLabel}</button></p>
+  ${content}
+</template>
+
+<template id="search.historyList">
+  <p
+    class   = "navigation-empty muted"
+    ?hidden = ${hasQueries}
+  >${empty}</p>
+  <ol
+    class   = "search-history-list plain-list"
+    ?hidden = ${isEmpty}
+  >${entries}</ol>
+</template>
+
+<template id="search.query">
+  <li
+    class        = "search-history-entry control-row"
+    aria-current = ${current}
+  >
+    <button
+      type         = "button"
+      class        = "control primary search-history-query"
+      data-tooltip = ${query}
+      @click       = ${onSelect}
+    >${query}</button>
+    <button
+      type         = "button"
+      class        = "icon-button muted"
+      aria-label   = ${removeLabel}
+      data-tooltip = ${removeLabel}
+      @click       = ${onRemove}
+    >${removeIcon}</button>
+  </li>
+</template>
+
+<template id="search.transfer">
+  <form
+    class   = "navigation-transfer form-stack"
+    @submit = ${onSubmit}
+  >
+    <h3 class="primary">${title}</h3>
+    <textarea
+      class        = "field primary navigation-json"
+      aria-label   = ${field}
+      data-tooltip = ${field}
+      spellcheck   = "false"
+      ?readonly    = ${readonly}
+      .value       = ${value}
+      @input       = ${onInput}
+    ></textarea>
+    <p
+      class = "navigation-transfer-message muted"
+      role  = "status"
+    >${message}</p>
+    <div class="control-row navigation-transfer-actions">
+      <button
+        type         = "submit"
+        class        = "control primary"
+        data-tooltip = ${apply}
+        ?hidden      = ${exporting}
+      >${apply}</button>
+      <button
+        type         = "button"
+        class        = "control primary"
+        data-tooltip = ${copy}
+        ?hidden      = ${importing}
+        @click       = ${onCopy}
+      >${copy}</button>
+      <button
+        type         = "button"
+        class        = "control primary"
+        data-tooltip = ${back}
+        @click       = ${onBack}
+      >${back}</button>
+    </div>
+  </form>
+</template>

@@ -1,0 +1,320 @@
+<template id="preferences">
+  <section
+    class      = "icons-popover popover surface primary preferences-popup"
+    aria-label = ${label}
+  >
+    <menu class="preferences-appearance plain-list control-row">
+      ${themeAction}
+      ${fontSizeControl}
+    </menu>
+    ${accentControl}
+    ${markControl}
+    ${sourceHighlight}
+    ${iconOptions}
+    ${holdDuration}
+    ${organizationRoot}
+    ${historyTree}
+    ${searchTree}
+  </section>
+</template>
+
+<template id="icon-options.fieldset">
+  <fieldset
+    id         = "icon-options"
+    aria-label = ${label}
+    ?disabled  = ${disabled}
+    @change    = ${onChange}
+  >${itemsContent}</fieldset>
+</template>
+
+<template id="icon-options.controlRow">
+  <label class="control-row">
+    <input
+      type              = "checkbox"
+      data-icon-setting = ${dataIconSetting}
+      data-tooltip      = ${content}
+      .checked          = ${checked}
+    >
+    <span
+      class       = "icon-option-icon"
+      aria-hidden = "true"
+    >${icon}</span>
+    <span>${content}</span>
+  </label>
+</template>
+
+<template id="hold-duration-control.holdControl">
+  <label class="hold-control control-row">
+    <span>${label}</span>
+    <input
+      data-tooltip   = ${label}
+      type           = "range"
+      min            = ${min}
+      max            = ${max}
+      step           = ${step}
+      .value         = ${value}
+      aria-valuetext = ${valueLabel}
+      @input         = ${onInput}
+    >
+    <output>${valueLabel}</output>
+  </label>
+</template>
+
+<template id="organization-root-control.organizationControl">
+  <form
+    class           = "organization-control form-stack"
+    aria-labelledby = ${ariaLabelledby}
+    @submit         = ${onSubmit}
+  >
+    <header class="organization-heading control-row">
+      <label
+        id  = ${ariaLabelledby}
+        for = ${id}
+      >${label}</label>
+      ${saveContent}
+    </header>
+    <input
+      data-tooltip     = ${hint}
+      id               = ${id}
+      class            = "field primary"
+      type             = "text"
+      autocomplete     = "off"
+      spellcheck       = "false"
+      placeholder      = ${placeholder}
+      .value           = ${value}
+      aria-describedby = ${ariaDescribedby}
+      @change          = ${onChange}
+      @input           = ${onInput}
+    >
+    <small
+      id    = ${id2}
+      class = "muted"
+    >${hint}</small>
+    <small
+      id    = ${id3}
+      class = "organization-status"
+      role  = "status"
+    >${message}</small>
+  </form>
+</template>
+
+<template id="organization-root-control.organizationActions">
+  <menu class="organization-actions plain-list control-row">
+            <li>
+              <button
+                type         = "submit"
+                class        = "icon-button muted"
+                aria-label   = ${saveLabel}
+                title        = ${saveLabel}
+                data-tooltip = ${saveLabel}
+              >${saveIcon}</button>
+            </li>
+            <li>
+              <button
+                type         = "button"
+                class        = "icon-button muted"
+                aria-label   = ${resetLabel}
+                title        = ${resetLabel}
+                data-tooltip = ${resetLabel}
+                @click       = ${onClick}
+              >${resetIcon}</button>
+            </li>
+          </menu>
+</template>
+
+<template id="history-tree-control.historyTreeControl">
+  <section
+    class           = "history-tree-control form-stack"
+    aria-labelledby = ${labelId}
+  >
+    <label
+      id  = ${labelId}
+      for = ${modeId}
+    >${label}</label>
+    <select
+      data-tooltip     = ${label}
+      id               = ${modeId}
+      class            = "field primary"
+      aria-describedby = ${describedBy}
+      @change          = ${onChange}
+    >${optionsContent}</select>
+    <small
+      id    = ${hintId}
+      class = "muted"
+    >${hint}</small>
+    <small
+      id   = ${statusId}
+      role = "status"
+    >${message}</small>
+  </section>
+</template>
+
+<template id="history-tree-control.option">
+  <option
+    value     = ${value}
+    .selected = ${selected}
+  >${content}</option>
+</template>
+
+<template id="accent-control.popoverHeading">
+  <div class="accent-fields control-row">
+    <input
+      data-tooltip = ${label}
+      id           = "accent-color"
+      type         = "color"
+      aria-label   = ${label}
+      .value       = ${value}
+      @input       = ${onInput}
+    >
+    <div class="color-value field primary">
+      <label
+        class = "color-input-label"
+        for   = "accent-hex"
+      >${label}</label>
+      <input
+        data-tooltip = ${hexLabel}
+        id           = "accent-hex"
+        class        = "primary color-value-input"
+        type         = "text"
+        aria-label   = ${hexLabel}
+        pattern      = "#[0-9a-fA-F]{6}"
+        maxlength    = "7"
+        spellcheck   = "false"
+        autocomplete = "off"
+        .value       = ${value}
+        @input       = ${onInput}
+      >
+    </div>
+    <button
+      type         = "button"
+      class        = "accent-reset icon-button muted"
+      id           = "accent-reset"
+      aria-label   = ${resetLabel}
+      data-tooltip = ${resetLabel}
+      ?disabled    = ${resetDisabled}
+      @click       = ${onClick}
+    >${resetIcon}</button>
+  </div>
+</template>
+
+<template id="mark-control.markOption">
+  <div class="mark-option">
+    <div class="accent-fields control-row">
+      <input
+        data-tooltip = ${label}
+        id           = "mark-color"
+        type         = "color"
+        aria-label   = ${label}
+        .value       = ${value}
+        @input       = ${onInput}
+      >
+      <div class="color-value field primary">
+        <label
+          class = "color-input-label"
+          for   = "mark-hex"
+        >${label}</label>
+        <input
+          data-tooltip = ${hexLabel}
+          id           = "mark-hex"
+          class        = "primary color-value-input"
+          type         = "text"
+          aria-label   = ${hexLabel}
+          pattern      = "#[0-9a-fA-F]{6}"
+          maxlength    = "7"
+          spellcheck   = "false"
+          autocomplete = "off"
+          .value       = ${value}
+          @input       = ${onInput}
+        >
+      </div>
+      <button
+        type         = "button"
+        class        = "accent-reset icon-button muted"
+        id           = "mark-reset"
+        aria-label   = ${resetLabel}
+        data-tooltip = ${resetLabel}
+        ?disabled    = ${resetDisabled}
+        @click       = ${onClick}
+      >${resetIcon}</button>
+    </div>
+  </div>
+</template>
+
+<template id="source-highlight-control.sourceHighlightControl">
+  <section
+    class           = "source-highlight-control form-stack"
+    aria-labelledby = "source-highlight-label"
+  >
+    <label
+      id  = "source-highlight-label"
+      for = "source-highlight-duration"
+    >${label}</label>
+    <div class="control-row">
+      <input
+        data-tooltip     = ${label}
+        id               = "source-highlight-duration"
+        class            = "field primary"
+        type             = "range"
+        min              = "0"
+        max              = ${max}
+        step             = "1"
+        .value           = ${value}
+        aria-valuetext   = ${valueLabel}
+        aria-describedby = "source-highlight-status"
+        @input           = ${onInput}
+      >
+      <output
+        class      = "source-highlight-value"
+        for        = "source-highlight-duration"
+        aria-label = ${valueLabel}
+      >${valueIconContent}</output>
+    </div>
+    <small
+      id    = "source-highlight-status"
+      class = "source-highlight-status"
+      role  = "status"
+    >${messageContent}</small>
+  </section>
+</template>
+
+<template id="font-size-control.fontTool">
+  <li class="font-tool">
+    <div
+      class      = "font-controls"
+      role       = "group"
+      aria-label = ${label}
+    >
+      <button
+        type         = "button"
+        id           = "font-smaller"
+        class        = "icon-button muted"
+        aria-label   = ${smallerLabel}
+        data-tooltip = ${smallerLabel}
+        ?disabled    = ${smallerDisabled}
+        @click       = ${onClick}
+      >${smallerIcon}</button>
+      <button
+        type         = "button"
+        id           = "font-larger"
+        class        = "icon-button muted"
+        aria-label   = ${largerLabel}
+        data-tooltip = ${largerLabel}
+        ?disabled    = ${largerDisabled}
+        @click       = ${onClick2}
+      >${largerIcon}</button>
+    </div>
+  </li>
+</template>
+
+<template id="theme">
+  <li data-tooltip=${hint}>
+    <button
+      type              = "button"
+      class             = "theme-button icon-button muted"
+      id                = "preferences-theme-toggle"
+      aria-label        = ${label}
+      aria-keyshortcuts = ${shortcut}
+      @click            = ${onClick}
+    >${icon}</button>
+  </li>
+</template>

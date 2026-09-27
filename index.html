@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name      = "viewport"
+    content   = "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+  >
+  <title>Hxape</title>
+  <meta
+    name    = "theme-color"
+    content = "#0c0f14"
+  >
+  <meta
+    name    = "apple-mobile-web-app-capable"
+    content = "yes"
+  >
+  <meta
+    name    = "mobile-web-app-capable"
+    content = "yes"
+  >
+  <meta
+    name    = "apple-mobile-web-app-title"
+    content = "Hxape"
+  >
+  <link
+    rel  = "manifest"
+    href = "manifest.json"
+  >
+  <link
+    rel  = "icon"
+    type = "image/svg+xml"
+    href = "public/icons/hxape.svg"
+  >
+  <link
+    rel   = "apple-touch-icon"
+    sizes = "180x180"
+    href  = "public/icons/apple-touch-icon.png"
+  >
+  <script src="public/js/theme-boot.mjs"></script>
+  <link
+    rel           = "stylesheet"
+    href          = "public/css/atoms.css"
+    fetchpriority = "high"
+    data-critical-style
+  >
+  <link
+    rel           = "stylesheet"
+    href          = "public/css/site.css"
+    fetchpriority = "high"
+    data-critical-style
+  >
+  <link
+    rel          = "stylesheet"
+    href         = "public/css/icons.css"
+    data-critical-style
+  >
+  <link
+    rel  = "stylesheet"
+    href = "public/css/table-resize.css"
+  >
+  <link
+    rel  = "stylesheet"
+    href = "public/css/navigation.css"
+  >
+  <link
+    rel  = "stylesheet"
+    href = "public/css/tokens.css"
+  >
+  <link
+    rel  = "preload"
+    href = "public/css/preferences.css"
+    as   = "style"
+  >
+  <script type="importmap">
+    {"imports":{"lit":"./vendor/lit-3.3.3/lit-core.min.js"}}
+  </script>
+  <script
+    src       = "public/js/bootstrap.mjs"
+    data-main = "public/js/main.mjs"
+    defer
+  ></script>
+</head>
+<body>
+  <noscript>
+    <link
+      rel  = "stylesheet"
+      href = "public/css/no-script.css"
+    >
+    <p>
+      JavaScript is required to load the catalogue.
+      <a
+        href   = "https://github.com/Hxape"
+        target = "_blank"
+        rel    = "noopener noreferrer"
+      >Hxape on GitHub</a>
+    </p>
+  </noscript>
+  <main
+    class = "terminal surface"
+  >
+    <header
+      id                = "site-header"
+      class             = "titlebar bar muted"
+      data-fragment     = "header"
+      data-fragment-url = "public/html/header.html"
+      aria-busy         = "true"
+    ></header>
+
+    <section
+      class      = "terminal-body"
+      aria-label = "Project catalogue and information"
+    >
+      <div
+        id    = "startup-status"
+        class = "startup-status muted"
+        role  = "status"
+      >
+        Loading page…
+        <a
+          href   = "https://github.com/Hxape"
+          target = "_blank"
+          rel    = "noopener noreferrer"
+        >Hxape on GitHub</a>
+      </div>
+      <template id="startup-fallback">
+        <p>
+          Could not load interface text.
+          <button
+            type        = "button"
+            class       = "control primary"
+            data-action = "reload"
+          >
+            Reload page
+          </button>
+        </p>
+        <a
+          href   = "https://github.com/Hxape"
+          target = "_blank"
+          rel    = "noopener noreferrer"
+        >Hxape on GitHub</a>
+      </template>
+      <project-catalog
+        id                = "project-tree"
+        role              = "navigation"
+        aria-label        = "Project catalogue"
+        data-fragment     = "catalog"
+        data-fragment-url = "public/html/catalog.html"
+        aria-busy         = "true"
+        hidden
+      ></project-catalog>
+      <document-panel
+        id                = "document-panel"
+        data-fragment     = "document-panel"
+        data-fragment-url = "public/html/document-panel.html"
+        aria-busy         = "true"
+      ></document-panel>
+    </section>
+
+    <footer
+      class             = "terminal-footer bar muted"
+      data-fragment     = "footer"
+      data-fragment-url = "public/html/footer.html"
+      aria-busy         = "true"
+    ></footer>
+  </main>
+</body>
+</html>

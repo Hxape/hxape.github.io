@@ -1,0 +1,548 @@
+<template id="navigation-collection.page">
+  <header class="navigation-heading bar">
+    <div class="navigation-heading-row control-row">
+      <h2 class="primary">${titleLabel}</h2>
+      ${groupActions}
+      <div class="navigation-collection-actions control-row">
+        ${toggleControls}
+        ${clearHistory}
+        ${exportAll}
+        ${importAll}
+        ${actionMode}
+        ${toggleView}
+      </div>
+      <button
+        data-tooltip = ${closeIcon}
+        type         = "button"
+        class        = "icon-button muted navigation-popup-close"
+        aria-label   = ${closeLabel}
+        @click       = ${onClose}
+      >${closeIcon}</button>
+    </div>
+    ${controlsSection}
+  </header>
+  ${transferForm}
+  ${storageMessage}
+  ${entries}
+</template>
+
+<template id="navigation-collection.detailsWithIcons">
+  <span class="navigation-detail muted has-icons">
+    <span class="navigation-detail-part">
+      <span
+        class       = "navigation-detail-icon"
+        aria-hidden = "true"
+      >${repositoryIconContent}</span><span>${repository}</span>
+    </span>${pathContent}
+  </span>
+</template>
+
+<template id="navigation-collection.pathDetail">
+  <span class="navigation-detail-part">
+    <span
+      class       = "navigation-detail-icon"
+      aria-hidden = "true"
+    >${detailIconContent}</span>
+    <span>${path}</span>
+  </span>
+</template>
+
+<template id="navigation-collection.detailsText">
+  <span class="navigation-detail muted">${repository} · ${kind}${pathContent}</span>
+</template>
+
+<template id="navigation-collection.bookmark">
+  <button
+    type         = "button"
+    class        = "icon-button navigation-bookmark muted"
+    aria-pressed = ${ariaPressed}
+    aria-label   = ${ariaLabel}
+    data-tooltip = ${ariaLabel}
+    @click       = ${onBookmark}
+  >
+    <span class="navigation-bookmark-display">${bookmarkedContent}</span>
+    <span class="navigation-bookmark-remove">${bookmarkRemoveIcon}</span>
+  </button>
+</template>
+
+<template id="navigation-collection.pendingBookmarkRemoval">
+  <button
+    type         = "button"
+    class        = "icon-button navigation-remove navigation-remove-pending muted"
+    aria-label   = ${undoLabel}
+    data-tooltip = ${undoLabel}
+    @click       = ${onUndo}
+  >
+    ${removeIcon}<span
+      class       = "navigation-remove-countdown"
+      aria-hidden = "true"
+    >${removeSeconds} с</span>
+  </button>
+</template>
+
+<template id="navigation-collection.undoHistory">
+  <button
+    type         = "button"
+    class        = "control primary navigation-undo"
+    data-tooltip = ${undoLabel}
+    @click       = ${onUndo}
+  >${undoLabel2}</button>
+</template>
+
+<template id="navigation-collection.groupAssignment">
+  <label
+    class        = "navigation-group-assignment icon-button muted"
+    data-tooltip = ${bookmarkGroupsLabel}
+  >
+      ${assignIcon}<select
+        data-tooltip = ${bookmarkGroupsLabel}
+        aria-label   = ${bookmarkGroupsLabel}
+        .value       = ${value}
+        @change      = ${onChange}
+      >
+      ${items}
+    </select>
+  </label>
+</template>
+
+<template id="navigation-collection.groupOption">
+  <option
+    value     = ${id}
+    ?selected = ${selected}
+  >${name}</option>
+</template>
+
+<template id="navigation-collection.remove">
+  <button
+    type         = "button"
+    class        = "icon-button navigation-remove muted"
+    aria-label   = ${removeLabel}
+    data-tooltip = ${removeLabel}
+    @click       = ${onRemove}
+  >${removeIcon}</button>
+</template>
+
+<template id="navigation-collection.bookmarkTree">
+  <ul class="navigation-tree plain-list">
+    ${items}
+    ${rowsContent}
+  </ul>
+</template>
+
+<template id="navigation-collection.bookmarkBranch">
+  <li>
+    <details open>
+      <summary class="muted">${name}</summary>
+      ${content}
+    </details>
+  </li>
+</template>
+
+<template id="navigation-collection.historyFiles">
+  <ul class="navigation-history-files navigation-tree plain-list">
+    ${items}
+  </ul>
+</template>
+
+<template id="navigation-collection.historyFile">
+  <li>
+    <details data-history-file=${key}>
+      <summary class="navigation-history-heading label-row"><span
+        class       = "navigation-detail-icon"
+        aria-hidden = "true"
+      >${iconContent}</span><span>${name}</span><span class="navigation-history-count muted">${rowsContent}</span></summary>
+      <ol class="navigation-list plain-list">
+        ${rowsContent2}
+      </ol>
+    </details>
+  </li>
+</template>
+
+<template id="navigation-collection.historyRepositories">
+  <ul class="navigation-history-repositories navigation-tree plain-list">
+    ${items}
+  </ul>
+</template>
+
+<template id="navigation-collection.historyRepository">
+  <li>
+    <details open>
+      <summary class="navigation-history-heading label-row"><span
+        class       = "navigation-detail-icon"
+        aria-hidden = "true"
+      >${iconContent}</span><span>${name}</span></summary>
+      ${items}
+    </details>
+  </li>
+</template>
+
+<template id="navigation-collection.historyRef">
+  <details
+    class = "navigation-history-ref"
+    open
+  >
+    <summary class="muted">${name}</summary>
+    ${content}
+  </details>
+</template>
+
+<template id="navigation-collection.groupActions">
+  <div class="navigation-group-actions control-row">
+    <button
+      type          = "button"
+      class         = "icon-button muted"
+      aria-label    = ${bookmarkGroupsLabel}
+      data-tooltip  = ${bookmarkGroupsLabel}
+      aria-expanded = ${ariaExpanded}
+      aria-controls = "bookmark-group-editor"
+      @click        = ${onEditGroupName}
+    >${groupsIcon}</button>
+    <button
+      type          = "button"
+      class         = "icon-button muted"
+      aria-label    = ${bookmarkGroupsLabel2}
+      data-tooltip  = ${bookmarkGroupsLabel2}
+      aria-expanded = ${ariaExpanded2}
+      aria-controls = "bookmark-group-editor"
+      @click        = ${onEditGroupName2}
+    >${groupsIcon2}</button>
+    <button
+      type         = "button"
+      class        = "bookmark-group-delete icon-button muted"
+      aria-label   = ${bookmarkGroupsLabel3}
+      data-tooltip = ${bookmarkGroupsLabel3}
+      ?disabled    = ${disabled}
+      @click       = ${onDeleteGroup}
+    >${groupsIcon3}</button>
+  </div>
+</template>
+
+<template id="navigation-collection.controlsToggle">
+  <button
+    type          = "button"
+    class         = "navigation-controls-toggle icon-button muted"
+    aria-label    = ${toggleControlsLabel}
+    data-tooltip  = ${toggleControlsLabel}
+    aria-expanded = ${ariaExpanded}
+    aria-controls = "navigation-collection-controls"
+    @click        = ${onToggleControls}
+  >${controlsIcon}</button>
+</template>
+
+<template id="navigation-collection.historyClear">
+  <button
+    type         = "button"
+    class        = "history-clear icon-button muted"
+    aria-label   = ${historyControlsLabel}
+    data-tooltip = ${historyControlsLabel}
+    ?disabled    = ${disabled}
+    @click       = ${onClear}
+  >${removeIcon}</button>
+</template>
+
+<template id="navigation-collection.exportAll">
+  <button
+    type         = "button"
+    class        = "icon-button muted"
+    aria-label   = ${exportAllLabel}
+    data-tooltip = ${exportAllLabel}
+    @click       = ${onExportAll}
+  >${exportAllIcon}</button>
+</template>
+
+<template id="navigation-collection.importAll">
+  <button
+    type         = "button"
+    class        = "icon-button muted"
+    aria-label   = ${importAllLabel}
+    data-tooltip = ${importAllLabel}
+    @click       = ${onImportAll}
+  >${importAllIcon}</button>
+</template>
+
+<template id="navigation-collection.actionMode">
+  <button
+    type         = "button"
+    class        = "icon-button muted navigation-action-mode"
+    aria-label   = ${actionModeLabel}
+    data-tooltip = ${actionModeLabel}
+    aria-pressed = ${ariaPressed}
+    @click       = ${onToggleActionMode}
+  >${content}</button>
+</template>
+
+<template id="navigation-collection.toggleView">
+  <button
+    data-tooltip = ${viewIcon}
+    type         = "button"
+    class        = "icon-button muted"
+    aria-label   = ${toggleViewLabel}
+    @click       = ${onToggleView}
+  >${viewIcon}</button>
+</template>
+
+<template id="navigation-collection.controls">
+  <div
+    id      = "navigation-collection-controls"
+    class   = "navigation-widget-controls"
+    ?hidden = ${hidden}
+  >${controls}</div>
+</template>
+
+<template id="navigation-collection.transfer">
+  <form
+    class   = "navigation-transfer form-stack"
+    @submit = ${onApplyJSON}
+  >
+    <h3 class="primary">${title}</h3>
+    <p class="muted">${hint}</p>
+    ${importingContent}
+    <textarea
+      data-tooltip = ${field}
+      class        = "field primary navigation-json"
+      aria-label   = ${field}
+      spellcheck   = "false"
+      ?readonly    = ${readonly}
+      .value       = ${value}
+      @input       = ${onEditJSON}
+    ></textarea>
+    ${messageContent}
+    ${confirmingContent}
+    <div class="control-row navigation-transfer-actions">
+      ${importingContent2}
+      <button
+        data-tooltip = ${cancel}
+        type         = "button"
+        class        = "control primary"
+        @click       = ${onCloseJSON}
+      >
+        ${cancel}
+      </button>
+    </div>
+  </form>
+</template>
+
+<template id="navigation-collection.importMode">
+  <div class="control-row">
+    <label class="control-row">
+      <input
+        data-tooltip = ${merge}
+        type         = "radio"
+        name         = "navigation-import-mode"
+        value        = "merge"
+        .checked     = ${checked}
+        @change      = ${onSelectImportMode}
+      >${merge}
+    </label>
+    <label class="control-row">
+      <input
+        data-tooltip = ${replace}
+        type         = "radio"
+        name         = "navigation-import-mode"
+        value        = "replace"
+        .checked     = ${checked2}
+        @change      = ${onSelectImportMode2}
+      >${replace}
+    </label>
+  </div>
+</template>
+
+<template id="navigation-collection.transferMessage">
+  <p
+    class = "navigation-transfer-message muted"
+    role  = "status"
+  >${message}</p>
+</template>
+
+<template id="navigation-collection.transferConfirmation">
+  <p
+    class = "navigation-confirm"
+    role  = "alert"
+  >${confirmation}</p>
+</template>
+
+<template id="navigation-collection.applyTransfer">
+  <button
+    data-tooltip = ${confirmingContent}
+    type         = "submit"
+    class        = "control primary"
+  >
+    ${confirmingContent}
+  </button>
+</template>
+
+<template id="navigation-collection.copyTransfer">
+  <button
+    data-tooltip = ${copy}
+    type         = "button"
+    class        = "control primary"
+    @click       = ${onCopyJSON}
+  >
+    ${copy}
+  </button>
+</template>
+
+<template id="navigation-collection.storageMessage">
+  <p
+    class = "navigation-message muted"
+    role  = "status"
+  >
+    ${messageLabel}${content}${content2}
+  </p>
+</template>
+
+<template id="navigation-collection.retryStorage">
+  <button
+    data-tooltip = ${retryLabel}
+    type         = "button"
+    class        = "control primary navigation-message-action"
+    @click       = ${onRetry}
+  >${retryLabel}</button>
+</template>
+
+<template id="navigation-collection.resetStorage">
+  <button
+    data-tooltip = ${resetLabel}
+    type         = "button"
+    class        = "control primary navigation-message-action"
+    @click       = ${onReset}
+  >${resetLabel}</button>
+</template>
+
+<template id="navigation-collection.list">
+  <ol class="navigation-list plain-list">
+    ${items}
+  </ol>
+</template>
+
+<template id="navigation-collection.empty">
+  <p class="navigation-empty muted">${emptyLabel}</p>
+</template>
+
+<template id="bookmark-group-control.bookmarkGroupControl">
+  <section
+    class      = "bookmark-group-control form-stack"
+    aria-label = ${selectLabel}
+  >
+    <div
+      class   = "control-row"
+      ?hidden = ${hidden}
+    >
+      <select
+        data-tooltip = ${selectLabel}
+        class        = "field primary"
+        aria-label   = ${selectLabel}
+        .value       = ${currentGroup}
+        @change      = ${onChange}
+      >${groupsContent}</select>
+      <button
+        type         = "button"
+        class        = "icon-button muted"
+        aria-label   = ${exportLabel}
+        data-tooltip = ${exportLabel}
+        @click       = ${onExportGroup}
+      >${exportIcon}</button>
+      <button
+        type         = "button"
+        class        = "icon-button muted"
+        aria-label   = ${importLabel}
+        data-tooltip = ${importLabel}
+        @click       = ${onImportGroup}
+      >${importIcon}</button>
+    </div>${nameModeContent}${confirmDeleteContent}</section>
+</template>
+
+<template id="bookmark-group-control.option">
+  <option
+    value     = ${id}
+    ?selected = ${selected}
+  >${name}</option>
+</template>
+
+<template id="bookmark-group-control.bookmarkGroupForm">
+  <form
+    id         = "bookmark-group-editor"
+    class      = "bookmark-group-form control-row"
+    aria-label = ${ariaLabel}
+    @submit    = ${onSubmit}
+  >
+            <label
+              class = "sr-only"
+              for   = "bookmark-group-name"
+            >${nameLabel}</label>
+            <input
+              data-tooltip = ${nameLabel}
+              id           = "bookmark-group-name"
+              class        = "field primary"
+              type         = "text"
+              maxlength    = "100"
+              .value       = ${value}
+              placeholder  = ${nameLabel}
+              autocomplete = "off"
+            >
+            <button
+              type         = "submit"
+              class        = "icon-button muted"
+              aria-label   = ${ariaLabel}
+              data-tooltip = ${ariaLabel}
+            >${nameModeContent}</button>
+            <button
+              type         = "button"
+              class        = "icon-button muted"
+              aria-label   = ${cancelLabel}
+              data-tooltip = ${cancelLabel}
+              @click       = ${onCancelGroupName}
+            >${cancelIcon}</button>
+          </form>
+</template>
+
+<template id="navigation-collection.entry">
+  <li
+    class          = "navigation-entry"
+    data-record-id = ${id}
+    aria-current   = ${ariaCurrent}
+  >
+    <button
+      data-tooltip     = ${content}
+      type             = "button"
+      class            = "navigation-drag icon-button muted"
+      data-drag-record = ${id}
+      aria-label       = ${reorderLabel}
+      title            = ${reorderLabel}
+    >⠿</button>
+    <button
+      type       = "button"
+      class      = "control primary navigation-destination"
+      aria-label = ${ariaLabel}
+      @click     = ${onOpen}
+    >
+      <span class="navigation-name primary">${name}</span>
+      ${content}
+    </button>
+    ${content2}
+    ${pendingRemoveContent}
+  </li>
+</template>
+
+<template id="bookmark-group-control.confirm">
+  <div
+    class = "navigation-confirm form-stack"
+    role  = "alert"
+  >
+            <p>${confirmDeleteLabel}</p>
+            <div class="control-row">
+              <button
+                data-tooltip = ${confirmLabel}
+                type         = "button"
+                class        = "control primary"
+                @click       = ${onConfirmDeleteGroup}
+              >${confirmLabel}</button>
+              <button
+                data-tooltip = ${cancelLabel}
+                type         = "button"
+                class        = "control primary"
+                @click       = ${onCancelDeleteGroup}
+              >${cancelLabel}</button>
+            </div>
+          </div>
+</template>
