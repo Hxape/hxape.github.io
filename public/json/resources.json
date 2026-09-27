@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "resources": [
+    {
+      "path": "index.html",
+      "sha256": "23251b2b28992a279b3c0222f7f862ea26451bf3ca78967b8fa8279700890153"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "dcf0324c68010bfa34617c1077e135ea6800f4a0c25d6178d7954941d2cc173f"
+    },
+    {
+      "path": "public/css/atoms.css",
+      "sha256": "6800246bbc70eda9599a880c7fd81345fe5966c8f3f0a229382499c5582a96e4"
+    },
+    {
+      "path": "public/css/icons.css",
+      "sha256": "161a96c6b6c83d373d5e1dc7b9e05c9af0650a53bc885e16803c2bdec3a37ba7"
+    },
+    {
+      "path": "public/css/navigation.css",
+      "sha256": "ee4b161c2696e4bb59e04b2fda97809896fdd52c7e8e8c60bd69dd86ad464dcc"
+    },
+    {
+      "path": "public/css/no-script.css",
+      "sha256": "ed5811c8ad4501630cba5bc9090748d628a17540469b666d0f8142a51ee02db7"
+    },
+    {
+      "path": "public/css/preferences.css",
+      "sha256": "e5eaf869a08a5f8b19b0d5aa369ffcd187e2269c09000580b112343628c41524"
+    },
+    {
+      "path": "public/css/site.css",
+      "sha256": "c970b21b723bfe2c99d5f22b171d666498eb693cd1d97b23ce345985a2153239"
+    },
+    {
+      "path": "public/css/source.css",
+      "sha256": "e916edec4c37461c9b8ff853687bdaa4b9564a287211b216989606f0ae44727f"
+    },
+    {
+      "path": "public/css/table-resize.css",
+      "sha256": "37b207b0510be99cb4f5d8ec1cb35bbad6d7a60daf84dbb772558dd56a525f3a"
+    },
+    {
+      "path": "public/css/tokens.css",
+      "sha256": "6ffe21c46a4cfa2dbc2fb7c03a0a1dad175fa33e1e454770bec0deaceb72a595"
+    },
+    {
+      "path": "public/html/bookmarks.html",
+      "sha256": "70278256c953d5595c1f0ab75e2c411dfd8e6a6bef4cf781544a1c4bfc1562df"
+    },
+    {
+      "path": "public/html/catalog.html",
+      "sha256": "a212b18c1ac221b738316786cf950d071f64797be64026823f01ec496e555f23"
+    },
+    {
+      "path": "public/html/document-panel.html",
+      "sha256": "bffee9853eac4d2a11272ab0d4092df8e91982341caec663ae22b751fc254e99"
+    },
+    {
+      "path": "public/html/footer.html",
+      "sha256": "01abd966621a92cd173992c23756fd6bee2223009a7f756f9ba6b77a9ae9756c"
+    },
+    {
+      "path": "public/html/header.html",
+      "sha256": "a3db425d24e3a0c19141d199f756176ccbf308be6a89e769756e4e4dcead9071"
+    },
+    {
+      "path": "public/html/history.html",
+      "sha256": "74cdfe4f0d82003f827b7f8b6b4eb39c53814b469f74b066a598db756ced2c0a"
+    },
+    {
+      "path": "public/html/preferences.html",
+      "sha256": "02c8acef90fd27af0fdfee24e8e7bd94de392418864c79aa321141e2ec5651cc"
+    },
+    {
+      "path": "public/html/search.html",
+      "sha256": "ee16186bcca2009814cd29c37988bd3272b9e46f5131405e396da4d99d1b501f"
+    },
+    {
+      "path": "public/html/source-view.html",
+      "sha256": "5e64c5ab70c3bf101ee056f729fcc6a3c360504b2f4d152dc6dec564ff97db62"
+    },
+    {
+      "path": "public/html/token-manager.html",
+      "sha256": "5140365fca17ca54f981fcbd3cadc8c008c5e8def25b6dce76271c6b897aa1eb"
+    },
+    {
+      "path": "public/icons/apple-touch-icon.png",
+      "sha256": "3a6365dc988147cd1fef51f9c7aa48876c048a7e12900415a8d0e620a061a682"
+    },
+    {
+      "path": "public/icons/hxape-192.png",
+      "sha256": "63f0092407a7e8c630e36b531e2ac7f89f47e351a76c5d9eaecb5e0f1f47c368"
+    },
+    {
+      "path": "public/icons/hxape-512.png",
+      "sha256": "679633fe31cceb3fa000419111ecc4f21f1b5e86c6e71d4fe6d3420a353f14a8"
+    },
+    {
+      "path": "public/icons/hxape.svg",
+      "sha256": "2f488a7f096dd11bb6123e57f0f7d72bb135e86d815171843c4087e00c96747d"
+    },
+    {
+      "path": "public/js/bootstrap.mjs",
+      "sha256": "9fe1909aabe5cc1ca3a284bf21082c68338ef74ec8bfdb57bcc5fc98d115989a"
+    },
+    {
+      "path": "public/js/main.mjs",
+      "sha256": "2155497cedfa304a27831274ce2cefbd69fd04394112406f813606d34b00811f"
+    },
+    {
+      "path": "public/js/octocat.mjs",
+      "sha256": "e993c57188bf65f7570605f111f15f03c148d104c23330c3c89aa3da26c7653a"
+    },
+    {
+      "path": "public/js/releases.mjs",
+      "sha256": "0e8e56800e26d4867d564a364f882b2bdce36b4523e3405a57f05d2fe7ca65cf"
+    },
+    {
+      "path": "public/js/shared.mjs",
+      "sha256": "f86aef4f723be9346b9075733ab0e0583f8261a1050ca494ebbda6ab384643f4"
+    },
+    {
+      "path": "public/js/source-view.mjs",
+      "sha256": "35d623d0f8f340391ea053e00c6cbdd91f2135568d024aac965cedd72f67067a"
+    },
+    {
+      "path": "public/js/theme-boot.mjs",
+      "sha256": "e766c3c688d7047e974823d370ae90f38b094e3b64066c40871c39d9b8dcf058"
+    },
+    {
+      "path": "public/js/tokens.mjs",
+      "sha256": "004494332a6327a14ef8aa9bda519fbb462c096ed91b99f1f71cee36a1b73f71"
+    },
+    {
+      "path": "public/json/build.json",
+      "sha256": "57e242ef7337b5ad66c849933ecba0fffdc39c982ec5b61081ef19d9662eb9ae"
+    },
+    {
+      "path": "public/json/haxelib/index.json",
+      "sha256": "66aa4d78bdf986e64e11d0c0baff093f1216d59335e4a4377fe3a615d0103087"
+    },
+    {
+      "path": "public/json/haxelib/publications.json",
+      "sha256": "1be43ddfcca3833728378f454454a6d852c4e9eb896cfe17f758324e2b89308b"
+    },
+    {
+      "path": "public/json/site.json",
+      "sha256": "139334f375beb2b3b4700995f7a704445a87e7e8f33306ac2198627c9f58be23"
+    },
+    {
+      "path": "vendor/brand-assets/GitHub_Invertocat_Black.svg",
+      "sha256": "693d7abe6f899646cc2e96856723b45e95f71885a54910b2749f6decdf7e1ee1"
+    },
+    {
+      "path": "vendor/brand-assets/GitHub_Invertocat_White.svg",
+      "sha256": "ccd84c89b1056345608fc3489357f8acc7397e49a3cdc2d418b6c8016911d47b"
+    },
+    {
+      "path": "vendor/lit-3.3.3/lit-core.min.js",
+      "sha256": "f607f470475d8ab790754cb70f72cdbe2390c4a57ab59df6cdb360eeb72bd87c"
+    }
+  ]
+}

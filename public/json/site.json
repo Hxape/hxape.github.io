@@ -1,0 +1,68 @@
+{
+  "organization": "https://github.com/Hxape",
+  "defaults": {
+    "private": true,
+    "branch": "main",
+    "level": 0,
+    "documents": {
+      "README": false,
+      "CONTRIBUTING": false,
+      "AGENTS": false,
+      "LICENSE": false
+    }
+  },
+  "icons": {
+    "repositories": false,
+    "directories": false,
+    "files": true,
+    "symbols": true
+  },
+  "haxelib": {
+    "catalog": "public/json/haxelib/index.json",
+    "ignore": [".*", "doc", "docs", "test", "tests", "examples", "samples", "tools", "bin", "build", "node_modules"],
+    "libraries": {
+      "format": { "sourceRoot": "format", "installation": { "source": "haxelib" } },
+      "formatter": { "sourceRoot": "src", "installation": { "source": "haxelib" } },
+      "greeter": { "sourceRoot": "src/greeter", "installation": { "source": "haxelib" } },
+      "hashlink": { "dev": true, "sourceRoot": ".", "ignore": ["templates"], "installation": { "source": "github", "refKind": "branch", "ref": "master", "environment": "hashlink" } },
+      "heaps": { "dev": true, "sourceRoot": ".", "url": "https://github.com/HeapsIO/heaps", "installation": { "source": "github", "refKind": "branch", "ref": "master", "environment": "heaps" } },
+      "hlc-compiler": { "sourceRoot": "src/hlc_compiler", "installation": { "source": "haxelib" } },
+      "hlopenal": { "dev": true, "sourceRoot": "openal", "installation": { "source": "github", "refKind": "branch", "ref": "master", "environment": "hashlink" } },
+      "hlsdl": { "dev": true, "sourceRoot": "sdl", "installation": { "source": "github", "refKind": "branch", "ref": "master", "environment": "hashlink" } },
+      "hscript": { "sourceRoot": "hscript", "ignore": ["script"], "installation": { "source": "haxelib" } },
+      "locator": { "sourceRoot": "src/locator", "installation": { "source": "haxelib" } },
+      "loreline": { "visible": false },
+      "sinker": { "sourceRoot": "src/sinker", "installation": { "source": "haxelib" } }
+    }
+  },
+  "repositories": {
+    "template-heaps": {
+      "private": true,
+      "level": 3,
+      "documents": {
+        "README": true,
+        "CONTRIBUTING": true,
+        "AGENTS": true,
+        "LICENSE": true
+      }
+    },
+    "lib-ecs": {
+      "level": 0,
+      "documents": {
+        "README": true,
+        "CONTRIBUTING": true,
+        "AGENTS": true,
+        "LICENSE": true
+      }
+    },
+    "lib-scenario": {
+      "level": 0,
+      "documents": {
+        "README": true,
+        "CONTRIBUTING": true,
+        "AGENTS": true,
+        "LICENSE": true
+      }
+    }
+  }
+}

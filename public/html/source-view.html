@@ -1,0 +1,31 @@
+<div class="source-view">
+  <p
+    class           = "source-note muted"
+    data-source-note
+  ></p>
+  <p
+    class            = "source-state"
+    data-source-state
+    role             = "status"
+  ></p>
+  <div
+    class             = "source-frame"
+    data-source-frame
+    hidden
+  >
+    <div
+      class       = "source-highlight"
+      data-source-highlight-band
+      aria-hidden = "true"
+    ></div>
+    <pre
+      class         = "source-gutter muted nonselectable"
+      data-source-gutter
+      role          = "button"
+      tabindex      = "0"
+      aria-label    = "Choose a line with arrow keys; Enter adds a bookmark"
+    ></pre>
+    <div class="source-bookmarks" data-source-bookmarks></div>
+    <pre class="source-code primary"><code data-source-code></code></pre>
+  </div>
+</div>

@@ -1,0 +1,265 @@
+<section
+  class      = "footer-content"
+  aria-label = "Page controls"
+>
+  <nav
+    class      = "github-destination"
+    aria-label = "Material address"
+  >
+    <button
+      type         = "button"
+      id           = "github-copy"
+      class        = "footer-button copy-button icon-button muted"
+      aria-label   = "Copy material address"
+      data-tooltip = "Copy material address"
+    >
+      <span data-control="copy"></span>
+    </button>
+    <span id="copy-status" class="sr-only" role="status"></span>
+    <a
+      id     = "github-link"
+      class  = "github-link primary nonselectable"
+      href   = "https://github.com/Hxape"
+      target = "_blank"
+      rel    = "noopener noreferrer"
+    >
+      <span class="github-address">https://github.com/Hxape</span>
+      <bdi class="github-path" dir="ltr">https://github.com/Hxape</bdi>
+    </a>
+  </nav>
+  <ul
+    class        = "keyboard-help plain-list nonselectable"
+    id           = "keyboard-help"
+    aria-label   = "Arrow up/down or W/S: select. Right or D: expand. Left or A: back. Enter or hold a row for the chosen duration: open information. E opens information; holding E for the chosen duration opens its Picture-in-Picture. Q or Escape closes information, returning to file browsing inside a Picture-in-Picture window."
+  >
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "select"
+        aria-label    = "Move selection with up/down or W/S"
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <!-- <span class="hint-arrows">
+          <span data-control="up"></span>
+          <span data-control="down"></span>
+        </span> -->
+        <kbd>s</kbd>tep <kbd>w</kbd>alk
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "expand"
+        aria-label    = "Expand with right arrow or D"
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <!-- <span data-control="right"></span> -->
+        <kbd>d</kbd>ive
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "collapse"
+        aria-label    = "Collapse or move to parent with left arrow or A"
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <!-- <span data-control="left"></span> -->
+        <kbd>a</kbd>scend
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "open-information"
+        aria-label    = "Open information with Enter or hold for the chosen duration. E opens information; hold E for Picture-in-Picture."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        op<kbd>e</kbd>n
+      </button>
+    </li>
+    <li
+      id   = "close-hint"
+      hidden
+    >
+      <button
+        type          = "button"
+        data-hint     = "quit"
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>q</kbd><span data-close-action>uit</span>
+      </button>
+    </li>
+
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "refresh"
+        aria-label    = "R: refresh."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>r</kbd>efresh
+      </button>
+    </li>
+        <li>
+      <button
+        type          = "button"
+        data-hint     = "toggle-view-mode"
+        aria-label    = "V: toggle view mode."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>v</kbd>iew
+      </button>
+    </li>
+        <li>
+      <button
+        type          = "button"
+        data-hint     = "cycle-link-mode"
+        aria-label    = "U: toggle link mode in cycle."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>u</kbd>rl
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "navigation-history"
+        aria-label    = "H: open history. Z and X: backward and forward history."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>h</kbd>istory
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "navigation-bookmarks"
+        aria-label    = "B: bookmarks."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>l</kbd>ast <kbd>b</kbd>ookmark 
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "open-search"
+        aria-label    = "F: find."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>f</kbd>ind
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        data-hint     = "toggle-theme"
+        aria-label    = "T: Toggle dark or light theme."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        <kbd>t</kbd>heme
+      </button>
+    </li>
+    <!-- <li>
+      <button
+        type          = "button"
+        data-hint     = "bookmarks"
+        aria-label    = "Less-than and greater-than: previous and next bookmark. Slash: last bookmark. Shift slash: remove current bookmark."
+        aria-expanded = "false"
+        aria-controls = "ui-tooltip"
+      >
+        bookmarks
+      </button>
+    </li> -->
+  </ul>
+  <menu
+    class      = "footer-controls control-row plain-list"
+    aria-label = "Footer controls"
+  >
+    <li>
+      <button
+        type          = "button"
+        id            = "help-toggle"
+        class         = "footer-button icon-button muted"
+        aria-controls = "keyboard-help"
+        aria-expanded = "true"
+        aria-label    = "Hide keyboard help"
+        data-tooltip  = "Hide keyboard help"
+      >
+        <span data-control="chevron"></span>
+      </button>
+    </li>
+    <li>
+      <button
+        type          = "button"
+        id            = "settings-toggle"
+        class         = "footer-button icon-button muted"
+        aria-controls = "footer-settings"
+        aria-expanded = "false"
+        aria-label    = "Expand bottom bar"
+        data-tooltip  = "Expand bottom bar"
+        hidden
+      >
+        <span data-control="chevron"></span>
+      </button>
+    </li>
+  </menu>
+  <section
+    id         = "footer-settings"
+    class      = "footer-settings control-row"
+    aria-label = "Site controls"
+    hidden
+  >
+    <p
+      id    = "site-commit"
+      class = "site-commit muted"
+    >
+      version:
+      <a
+        href   = "https://github.com/Hxape/hxape.github.io/commits/main"
+        target = "_blank"
+        rel    = "noopener noreferrer"
+      >
+        checking…
+      </a>
+      © 2026 Yerumaku
+    </p>
+  </section>
+</section>
+<div
+  id         = "site-update"
+  class      = "site-update control-row surface primary"
+  role       = "status"
+  aria-live  = "polite"
+  hidden
+>
+  <span id="site-update-message"></span>
+  <button
+    type  = "button"
+    id    = "site-update-retry"
+    class = "control"
+    hidden
+  >
+    Retry update
+  </button>
+</div>
+<dialog
+  id         = "token-dialog"
+  class      = "token-dialog surface primary"
+  aria-label = "GitHub tokens"
+>
+  <p role="status">Loading token manager…</p>
+</dialog>

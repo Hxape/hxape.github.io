@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="72 72 368 368" role="img" aria-label="$hx @pe — Hxape">
+  <defs>
+    <clipPath id="primary"><rect x="0" y="0" width="512" height="260"/></clipPath>
+    <clipPath id="shadow"><rect x="0" y="271" width="512" height="241"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="#0c0f14"/>
+  <g font-family="Menlo, SFMono-Regular, monospace" font-size="152" font-weight="700" letter-spacing="-8" text-anchor="middle">
+    <text x="256" y="332" fill="#8b94a3" clip-path="url(#shadow)">@pe</text>
+    <text x="256" y="275" fill="#27e69b" clip-path="url(#primary)">$hx</text>
+  </g>
+</svg>

@@ -1,0 +1,142 @@
+/* Исходник и доступная колонка номеров остаются двумя текстовыми узлами независимо от длины файла. */
+.source-view {
+  min-width: 0;
+}
+
+.source-note {
+  margin: 0 0 12px 12px;
+  font-size: calc(11px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+/* Приглушённый цвет появляется после загрузки source.css; при её отказе сообщение сохраняет унаследованный цвет. */
+.source-state {
+  color: var(--muted);
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.6;
+}
+
+.source-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  min-width: 0;
+}
+
+.source-frame[hidden] {
+  display: none;
+}
+
+.source-highlight {
+  position: absolute;
+  z-index: 0;
+  inset-inline: 0;
+  top: var(--source-highlight-top, 0px);
+  height: var(--source-line-height, 0px);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.source-frame[data-source-highlight]>.source-highlight {
+  opacity: 1;
+}
+
+.source-gutter,
+.source-code {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font: inherit;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.6;
+  white-space: pre;
+  /* Полоса горизонтальной прокрутки не перекрывает последнюю физическую строку. */
+  padding-block-end: 20px;
+}
+
+.source-gutter {
+  grid-column: 1;
+  grid-row: 1;
+  box-sizing: border-box;
+  width: calc(var(--source-number-digits, 1) * 1ch + 1ch + 21px);
+  padding-inline-start: 20px;
+  padding-inline-end: 1ch;
+  border-inline-end: 1px solid var(--line);
+  text-align: right;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.source-gutter:focus-visible {
+  outline: none;
+}
+
+.source-code {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  padding-inline-start: 1ch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  tab-size: 2;
+}
+
+.source-code code {
+  font: inherit;
+}
+
+/* Узлы создаются только для закладок этого файла; номера строк остаются одним текстом. */
+.source-bookmarks {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 20px;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.6;
+  pointer-events: none;
+}
+
+.source-line-bookmark {
+  position: absolute;
+  inset-inline-start: 3px;
+  top: calc(var(--bookmark-line) * 1.6em - .35em);
+  width: 19px;
+  height: 2.3em;
+  --control-padding: 0;
+  --control-border: 0;
+  --control-radius: 0;
+  --control-background: transparent;
+  display: flex;
+  align-items: center;
+  color: var(--bookmark);
+  --icon-size: 12px;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+}
+
+.source-bookmark-icon {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: .35em;
+  height: 1.6em;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.source-line-bookmark:focus-visible {
+  outline: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+[data-bookmark-dragging] .source-line-bookmark {
+  cursor: grabbing;
+}
+
+.source-line-bookmark[data-bookmark-removing] {
+  opacity: .35;
+}

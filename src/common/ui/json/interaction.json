@@ -1,0 +1,13 @@
+{
+  "motion": {
+    "duration": 180,
+    "easing": "cubic-bezier(.2,.7,.2,1)"
+  },
+  "tooltip": {
+    "desktopMedia": "(hover: hover) and (pointer: fine)",
+    "delay": 420,
+    "viewportPadding": 8,
+    "targetGap": 8,
+    "alternateGap": 10
+  }
+}

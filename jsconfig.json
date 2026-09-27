@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+
+    ],
+    "skipLibCheck": false,
+    "paths": {
+      "lit": [
+        "./vendor/types/lit-3.3.3/lit/index.d.ts"
+      ],
+      "lit-element/*": [
+        "./vendor/types/lit-3.3.3/lit-element/*"
+      ],
+      "lit-html": [
+        "./vendor/types/lit-3.3.3/lit-html/lit-html.d.ts"
+      ],
+      "lit-html/*": [
+        "./vendor/types/lit-3.3.3/lit-html/*"
+      ],
+      "@lit/reactive-element": [
+        "./vendor/types/lit-3.3.3/@lit/reactive-element/reactive-element.d.ts"
+      ],
+      "@lit/reactive-element/*": [
+        "./vendor/types/lit-3.3.3/@lit/reactive-element/*"
+      ],
+      "trusted-types/*": [
+        "./vendor/types/lit-3.3.3/@types/trusted-types/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.mjs"
+  ],
+  "exclude": [
+    "vendor",
+    "public/js"
+  ]
+}

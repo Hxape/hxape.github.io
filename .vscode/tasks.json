@@ -1,0 +1,76 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Сборка и экспорт",
+      "type": "process",
+      "command": "ruby",
+      "args": [
+        "${workspaceFolder}/.vscode/run.rb",
+        "${input:configuration}",
+        "browser",
+        "${input:source}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+
+      ],
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "showReuseMessage": false
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "Сайт, ресурсы и деревья исходников.",
+      "icon": {
+        "id": "globe"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "configuration",
+      "type": "pickString",
+      "description": "Конфигурация",
+      "options": [
+        {
+          "label": "Сайт: JS, HTML и список ресурсов",
+          "value": "site"
+        },
+        {
+          "label": "Только JS и HTML",
+          "value": "code"
+        },
+        {
+          "label": "Только список ресурсов",
+          "value": "resources"
+        },
+        {
+          "label": "Опубликованное дерево одного src",
+          "value": "source"
+        },
+        {
+          "label": "Закрытые деревья сайта",
+          "value": "private"
+        }
+      ],
+      "default": "site"
+    },
+    {
+      "id": "source",
+      "type": "promptString",
+      "description": "Каталог src для экспорта одного дерева; остальные конфигурации его не используют",
+      "default": "template-heaps/src"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<menu
+  class      = "window-controls plain-list control-row"
+  aria-label = "Window controls"
+>
+  <li>
+    <button
+      type         = "button"
+      id           = "window-close"
+      class        = "traffic close-traffic icon-button"
+      aria-label   = "Close Picture-in-Picture or information"
+      data-tooltip = "Close Picture-in-Picture or information"
+    >
+      <span class="traffic-mark">
+        <svg
+          viewBox     = "0 0 16 16"
+          aria-hidden = "true"
+        >
+          <path d="m3 3 10 10M13 3 3 13"/>
+        </svg>
+      </span>
+    </button>
+  </li>
+  <li>
+    <button
+      type         = "button"
+      id           = "window-pip"
+      class        = "traffic pip-traffic icon-button"
+      aria-label   = "Open Picture-in-Picture"
+      data-tooltip = "Picture-in-Picture"
+      disabled
+    >
+      <span class="traffic-mark">
+        <svg
+          viewBox     = "0 0 16 16"
+          aria-hidden = "true"
+        >
+          <path d="M2 8h12"/>
+        </svg>
+      </span>
+    </button>
+  </li>
+  <li>
+    <button
+      type         = "button"
+      id           = "window-fill"
+      class        = "traffic fill-traffic icon-button"
+      aria-label   = "Fill viewport"
+      data-tooltip = "Fill viewport"
+    >
+      <span class="traffic-mark">
+        <svg
+          class       = "traffic-expand"
+          viewBox     = "0 0 16 16"
+          aria-hidden = "true"
+        >
+          <path d="M2 2h11L2 13ZM14 14H3L14 3Z"/>
+        </svg>
+        <svg
+          class       = "traffic-contract"
+          viewBox     = "0 0 16 16"
+          aria-hidden = "true"
+        >
+          <path d="M7 7H1l6-6ZM9 9h6l-6 6Z"/>
+        </svg>
+      </span>
+    </button>
+  </li>
+</menu>
+<h1 class="titlebar-caption nonselectable">https://hxape.github.io/</h1>
+<section
+  id         = "header-settings"
+  class      = "control-row"
+  aria-label = "Site controls"
+>
+  <site-preferences id="site-preferences"></site-preferences>
+</section>
+<p
+  id     = "window-status"
+  class  = "window-status"
+  role   = "status"
+  hidden
+></p>
