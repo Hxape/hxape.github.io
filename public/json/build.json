@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "entries": {
+    "theme": "public/js/theme-boot.mjs",
+    "bootstrap": "public/js/bootstrap.mjs",
+    "main": "public/js/main.mjs",
+    "worker": "public/js/octocat.mjs"
+  },
+  "outputs": [
+    "public/js/bootstrap.mjs",
+    "public/js/main.mjs",
+    "public/js/octocat.mjs",
+    "public/js/releases.mjs",
+    "public/js/shared.mjs",
+    "public/js/source-view.mjs",
+    "public/js/theme-boot.mjs",
+    "public/js/tokens.mjs"
+  ],
+  "html": [
+    "public/html/bookmarks.html",
+    "public/html/catalog.html",
+    "public/html/document-panel.html",
+    "public/html/footer.html",
+    "public/html/header.html",
+    "public/html/history.html",
+    "public/html/preferences.html",
+    "public/html/search.html",
+    "public/html/source-view.html",
+    "public/html/token-manager.html"
+  ]
+}

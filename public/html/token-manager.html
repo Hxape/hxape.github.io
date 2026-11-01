@@ -1,0 +1,149 @@
+<section class="token-manager form-stack">
+  <header class="control-row">
+    <button
+      type                 = "button"
+      class                = "token-close icon-button muted"
+      data-token-action    = "close"
+      aria-label           = "Close token manager"
+    >
+      <span data-control="back"></span>
+    </button>
+    <h2 class="strong">Manage GitHub tokens</h2>
+  </header>
+  <p
+    id         = "octocat-status"
+    class      = "token-hint muted"
+    role       = "status"
+    aria-live  = "polite"
+  ></p>
+  <p
+    id        = "token-status"
+    role      = "status"
+    aria-live = "polite"
+  ></p>
+  <button
+    type              = "button"
+    class             = "control primary"
+    data-token-action = "retry-storage"
+    hidden
+  >
+    Retry storage
+  </button>
+  <label
+    id    = "octocat-auto-restore-choice"
+    class = "token-auto-passkey control-row muted"
+  >
+    <input
+      id      = "octocat-auto-restore"
+      type    = "checkbox"
+      checked
+    >
+    <span data-octocat-auto-restore-label>Automatically start Octocat and ask to unlock a saved passkey</span>
+  </label>
+  <details id="token-add-details">
+    <summary class="control-row muted">
+      <span class="token-add-chevron" data-control="back"></span>
+      Add new token
+    </summary>
+    <div class="token-add-body form-stack">
+      <p>A token lets this browser read repositories you can access on GitHub. Choose a fine-grained personal access token:</p>
+      <ol>
+        <li>
+          On GitHub, choose
+          <strong>Hxape</strong>
+          as the resource owner and select the repositories you want to read.
+        </li>
+        <li>
+          Grant repository
+          <strong>Contents: Read-only</strong>, set an expiration, then generate the token. Organization approval may be required.
+        </li>
+        <li>
+          Copy the token into this form. GitHub displays it only once.
+        </li>
+      </ol>
+      <p>
+        <a
+          class  = "primary"
+          href   = "https://github.com/settings/personal-access-tokens/new"
+          target = "_blank"
+          rel    = "noopener noreferrer"
+        >Create a token on GitHub</a>
+      </p>
+      <form
+        id           = "token-form"
+        class        = "form-stack"
+        autocomplete = "off"
+      >
+        <label class="form-stack">
+          Label
+          <input
+            class         = "field primary"
+            name          = "label"
+            type          = "text"
+            maxlength     = "40"
+            required
+            autocomplete  = "off"
+          >
+        </label>
+        <label class="form-stack">
+          Token
+          <input
+            class          = "field primary"
+            name           = "token"
+            type           = "password"
+            required
+            autocomplete   = "off"
+            autocapitalize = "off"
+            spellcheck     = "false"
+          >
+        </label>
+        <fieldset>
+          <legend>Protect the saved token</legend>
+          <label class="control-row">
+            <input
+              type  = "radio"
+              name  = "storage"
+              value = "encrypted"
+            > Password
+          </label>
+          <label class="control-row">
+            <input
+              type    = "radio"
+              name    = "storage"
+              value   = "passkey"
+              checked
+            > Passkey
+          </label>
+        </fieldset>
+        <label
+          id    = "token-passphrase-row"
+          class = "form-stack"
+        >
+          Encryption password
+          <input
+            class        = "field primary"
+            name         = "passphrase"
+            type         = "password"
+            autocomplete = "new-password"
+            minlength    = "12"
+            required
+          >
+        </label>
+        <p class="token-hint muted">The token is encrypted with this password before it is saved on this device. Enter it again to unlock the token. The password is not saved.</p>
+        <p class="token-passkey-hint" hidden>The token is encrypted with a key from your passkey. If the passkey is lost or unsupported, add the token again or use password storage.</p>
+        <button
+          type     = "submit"
+          class    = "control primary"
+          disabled
+        >
+          Add token
+        </button>
+      </form>
+    </div>
+  </details>
+  <ul
+    id         = "token-list"
+    class      = "plain-list form-stack"
+    aria-label = "Added tokens"
+  ></ul>
+</section>

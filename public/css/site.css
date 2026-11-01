@@ -1,0 +1,1833 @@
+/* Общие цвета и размеры для основного окна и PiP. */
+:root {
+  color-scheme: light dark;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: calc(16px + var(--font-increase, 0px));
+  color: var(--text);
+  background: var(--page);
+  --page: light-dark(#edf0ee, #111418);
+  --surface: light-dark(#fbfcfb, #0c0f14);
+  --bar: light-dark(#f0f3f1, #16191f);
+  --text: light-dark(#29342f, #c6cddc);
+  --strong: light-dark(#182a20, #dfe5ed);
+  --accent-default: light-dark(#c33f4b, #27e69b);
+  --accent: var(--accent-override, var(--accent-default));
+  --mark-background: light-dark(#899990, #8b94a3);
+  --muted: light-dark(#61706a, #8b94a3);
+  /* Видимость подчёркивания ссылок каталога вне наведения: задавать процент от 0% до 100%. */
+  --catalog-link-underline-opacity: 15%;
+  /* Светлый или тёмный ореол отделяет рисунок ссылки от соседнего текста; смещения и размытие задаются в px. */
+  --catalog-link-icon-shadow: 0 0 2px var(--surface);
+  --line: light-dark(#d7dfd9, #293039);
+  --border: light-dark(#cbd5ce, #22252b);
+  --scroll: light-dark(#b7c4bc, #3a424e);
+  --bookmark: light-dark(#61706a, #8b94a3);
+  --shadow: light-dark(#162e2115, #0005);
+  --backdrop: light-dark(#27382f55, #0009);
+  --control: light-dark(#ffffff, #303a40);
+  /* VS Code 1.139.1 symbolIcon defaults (light/dark modern). */
+  --icon-class: light-dark(#d67e00, #ee9d28);
+  --icon-interface: light-dark(#007acc, #75beff);
+  --icon-enum: light-dark(#d67e00, #ee9d28);
+  --icon-field: light-dark(#007acc, #75beff);
+  --icon-method: light-dark(#652d90, #b180d7);
+  --icon-enum-member: light-dark(#007acc, #75beff);
+  --gutter: clamp(12px, 2.4vw, 32px);
+  --font-increase: 0px;
+  --row-height: calc(17px + var(--font-increase));
+  --controls-inset: 22px;
+}
+
+/* Служебный интерфейс не попадает в выделение; области чтения и ввод явно разрешают его общими атомами. */
+html {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Эти существующие области содержат читаемый текст; соседние toolbar, gutter и состояния остаются служебными. */
+#docs-document,
+.doc-section,
+.source-code code[data-source-code] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html,
+body {
+  touch-action: pan-x pan-y;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100svh;
+  margin: 0;
+  padding: var(--page-padding, var(--gutter));
+}
+
+:root[data-layout="fill"] {
+  --page-padding: 0px;
+  --window-limit: 100%;
+  --frame-width: 0px;
+  --frame-radius: 0px;
+  --frame-shadow: none;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --page-padding: 0px;
+    --window-limit: 100%;
+    --frame-width: 0px;
+    --frame-radius: 0px;
+    --frame-shadow: none;
+    --controls-inset: 12px;
+  }
+}
+
+/* Каркас терминала и верхние кнопки окна. */
+.terminal {
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(100%, var(--window-limit, 1320px));
+  min-height: 0;
+  margin: 0 auto;
+  overflow: hidden;
+  border: var(--frame-width, 1px) solid var(--border);
+  border-radius: var(--frame-radius, 16px);
+  box-shadow: var(--frame-shadow, 0 18px 50px var(--shadow));
+}
+
+.titlebar {
+  --theme-opacity: .45;
+  --update-opacity: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 12px var(--controls-inset);
+  text-align: center;
+  font-size: calc(13px + var(--font-increase, 0px));
+  letter-spacing: .02em;
+}
+
+.titlebar[data-pointer-over],
+.titlebar:focus-within {
+  --theme-opacity: 1;
+  --update-opacity: 1;
+}
+
+@media (max-width: 760px),
+(hover: none),
+(pointer: coarse) {
+  .titlebar {
+    --theme-opacity: 1;
+    --update-opacity: 1;
+  }
+}
+
+.titlebar-caption {
+  margin: 0;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.traffic {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  color: rgb(0 0 0 / .55);
+}
+
+.close-traffic {
+  background: #ff6059;
+}
+
+.pip-traffic {
+  background: #ffbd2e;
+}
+
+.fill-traffic {
+  background: #28c840;
+}
+
+:root[data-window-active="false"] .window-controls:not(:hover) .traffic:not(:disabled) {
+  background: light-dark(#c5c8cc, #50555d);
+}
+
+.traffic-mark {
+  display: grid;
+  place-items: center;
+  width: 7px;
+  height: 7px;
+  overflow: hidden;
+}
+
+.traffic-mark svg {
+  grid-area: 1 / 1;
+  width: 7px;
+  height: 7px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.7;
+  stroke-linecap: round;
+}
+
+.fill-traffic .traffic-mark svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.fill-traffic .traffic-mark {
+  width: 11px;
+  height: 11px;
+  overflow: visible;
+}
+
+.fill-traffic .traffic-contract {
+  width: 11px;
+  height: 11px;
+}
+
+.fill-traffic[data-layout="fill"] .traffic-expand,
+.fill-traffic:not([data-layout="fill"]) .traffic-contract {
+  display: none;
+}
+
+.pip-traffic:disabled .traffic-mark {
+  visibility: hidden;
+}
+
+.traffic>span {
+  opacity: 0;
+}
+
+.window-controls:hover .traffic>span,
+.window-controls:focus-within .traffic>span {
+  opacity: 1;
+}
+
+.traffic:disabled {
+  cursor: default;
+}
+
+.window-status {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  left: 16px;
+  max-width: calc(100% - 32px);
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--control);
+  color: var(--text);
+  text-align: left;
+}
+
+site-preferences {
+  justify-self: end;
+}
+
+#header-settings {
+  justify-self: end;
+}
+
+@media (min-width: 761px) and (max-width: 1000px) {
+  .titlebar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .titlebar-caption {
+    display: none;
+  }
+}
+
+project-catalog {
+  display: block;
+}
+
+#project-tree[hidden] {
+  display: none;
+}
+
+document-panel {
+  display: contents;
+}
+
+/* Каталог: строки сохраняют полные имена и прокручиваются внутри дерева. */
+.terminal-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#project-tree {
+  direction: rtl;
+  min-width: 0;
+  padding: 0px;
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-color: var(--scroll) var(--surface);
+  scrollbar-width: thin;
+}
+
+#project-tree>* {
+  direction: ltr;
+}
+
+.tree-list {
+  width: max-content;
+  min-width: 100%;
+}
+
+.tree-row {
+  width: 100%;
+  margin: 0;
+  outline: none;
+  background-origin: content-box;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: left;
+  scroll-margin-block: 16px;
+  -webkit-touch-callout: none;
+  touch-action: pan-x pan-y;
+}
+
+/* Лист дерева — нативная кнопка и отдельная приписка; общий контейнер сохраняет прежнюю строку и её колонку. */
+.tree-leaf {
+  width: max-content;
+  min-width: 100%;
+  font-size: calc(14px + var(--font-increase, 0px));
+  line-height: var(--row-height);
+}
+
+.tree-leaf>button.tree-row.control {
+  --control-padding: 0 12px;
+  --control-radius: 0;
+  --control-background: var(--tree-guides, none);
+  --control-border: 0;
+  background-origin: content-box;
+  width: 100%;
+}
+
+.tree-leaf.has-catalog-caption>button.tree-row {
+  width: max-content;
+  flex: none;
+  padding-inline-end: 0;
+}
+
+.tree-leaf>.catalog-caption {
+  padding-inline-end: 12px;
+}
+
+summary.tree-row {
+  padding: 0 12px;
+  border: 0;
+  background: var(--tree-guides, none);
+  background-origin: content-box;
+  font-size: calc(14px + var(--font-increase, 0px));
+  line-height: var(--row-height);
+  list-style: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::marker {
+  content: "";
+}
+
+[data-level="0"]> :not(summary):not(.tree-content) {
+  display: none;
+}
+
+h2,
+h3 {
+  margin: 0;
+  font: inherit;
+}
+
+summary h2 {
+  min-width: 0;
+}
+
+summary h2::after,
+.repository-row>.node-label::after,
+.outline-row[data-type="directory"]>.node-label::after {
+  content: "/";
+  color: var(--muted);
+}
+
+.tree-prefix {
+  flex: none;
+  width: var(--prefix-width);
+  margin-right: 3px;
+  white-space: pre;
+  font: inherit;
+  font-variant-ligatures: none;
+}
+
+.module-brief {
+  display: none;
+  flex: none;
+  margin-inline-start: 1ch;
+  white-space: nowrap;
+}
+
+.library-version,
+.library-release {
+  flex: none;
+  margin-inline-start: 1ch;
+  font-size: calc(11px + var(--font-increase, 0px));
+  white-space: nowrap;
+}
+
+.library-version,
+.library-release {
+  display: inline-flex;
+  align-items: center;
+  gap: .4ch;
+}
+
+.version-source-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+}
+
+.library-release.is-newer {
+  color: var(--accent);
+}
+
+#haxelib-list .repository-row>.node-label {
+  min-width: var(--library-name-width);
+}
+
+details[data-repository]:not([open])>summary:is(.is-selected, :focus-visible)>.module-brief {
+  display: inline-block;
+}
+
+.outline-row.has-catalog-caption>.node-label {
+  min-width: var(--catalog-caption-label-width);
+}
+
+.catalog-caption {
+  flex: none;
+  margin-inline-start: 1ch;
+  white-space: nowrap;
+  isolation: isolate;
+}
+
+p.description {
+  isolation: isolate;
+}
+
+.catalog-caption mark,
+p.description mark {
+  position: relative;
+  margin-inline-start: -.5ch;
+  margin-inline-end: -.5ch;
+  padding-inline: .5ch;
+  background: none;
+  color: var(--surface);
+}
+
+.catalog-caption mark::before,
+p.description mark::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+  z-index: -1;
+  background: var(--mark-background);
+  pointer-events: none;
+}
+
+.catalog-caption a,
+.description a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: .1em;
+  text-decoration-color: color-mix(in srgb, currentColor var(--catalog-link-underline-opacity), transparent);
+}
+
+.catalog-caption mark a,
+p.description mark a {
+  color: inherit;
+}
+
+.catalog-caption a:focus-visible,
+.description a:focus-visible {
+  outline: 1px solid var(--muted);
+  outline-offset: 1px;
+}
+
+/* Размер и отступ знака совпадают со значками дерева; знак не участвует в потоке текста. */
+:is(.description, .catalog-caption) a[data-navigation-link] {
+  position: relative;
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="repository"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M15.698%207.287%208.712.302a1.03%201.03%200%200%200-1.457%200l-1.45%201.45%201.84%201.84a1.223%201.223%200%200%201%201.55%201.56l1.773%201.774a1.224%201.224%200%200%201%201.267%202.025%201.226%201.226%200%200%201-2.002-1.334L8.58%205.963v4.353a1.226%201.226%200%201%201-1.008-.036V5.887a1.226%201.226%200%200%201-.666-1.608L5.093%202.465l-4.79%204.79a1.03%201.03%200%200%200%200%201.457l6.986%206.986a1.03%201.03%200%200%200%201.457%200l6.953-6.953a1.03%201.03%200%200%200%200-1.457%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="directory"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M2%204.5V6H5.58579C5.71839%206%205.84557%205.94732%205.93934%205.85355L7.29289%204.5L5.93934%203.14645C5.84557%203.05268%205.71839%203%205.58579%203H3.5C2.67157%203%202%203.67157%202%204.5ZM1%204.5C1%203.11929%202.11929%202%203.5%202H5.58579C5.98361%202%206.36514%202.15804%206.64645%202.43934L8.20711%204H12.5C13.8807%204%2015%205.11929%2015%206.5V11.5C15%2012.8807%2013.8807%2014%2012.5%2014H3.5C2.11929%2014%201%2012.8807%201%2011.5V4.5ZM2%207V11.5C2%2012.3284%202.67157%2013%203.5%2013H12.5C13.3284%2013%2014%2012.3284%2014%2011.5V6.5C14%205.67157%2013.3284%205%2012.5%205H8.20711L6.64645%206.56066C6.36514%206.84197%205.98361%207%205.58579%207H2Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="file"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M5%201C3.89543%201%203%201.89543%203%203V13C3%2014.1046%203.89543%2015%205%2015H11C12.1046%2015%2013%2014.1046%2013%2013V5.41421C13%205.01639%2012.842%204.63486%2012.5607%204.35355L9.64645%201.43934C9.36514%201.15804%208.98361%201%208.58579%201H5ZM4%203C4%202.44772%204.44772%202%205%202H8V4.5C8%205.32843%208.67157%206%209.5%206H12V13C12%2013.5523%2011.5523%2014%2011%2014H5C4.44772%2014%204%2013.5523%204%2013V3ZM11.7929%205H9.5C9.22386%205%209%204.77614%209%204.5V2.20711L11.7929%205Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="file"][data-navigation-file-kind="hx"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M13.56%204.35L10.65%201.44C10.368%201.16009%209.98732%201.00208%209.58998%201H5.99998C5.47003%201.00158%204.96224%201.2128%204.58751%201.58753C4.21278%201.96227%204.00156%202.47005%203.99998%203V8.83C4.28127%208.9031%204.53719%209.05181%204.73998%209.26C4.84686%209.3602%204.93492%209.47874%204.99998%209.61V3C4.99998%202.73478%205.10534%202.48043%205.29287%202.29289C5.48041%202.10536%205.73476%202%205.99998%202H8.99998V4.5C8.99998%204.89782%209.15801%205.27936%209.43932%205.56066C9.72062%205.84196%2010.1022%206%2010.5%206H13V13C13%2013.2652%2012.8946%2013.5196%2012.7071%2013.7071C12.5195%2013.8946%2012.2652%2014%2012%2014H10.48L9.46998%2015H12C12.5299%2014.9984%2013.0377%2014.7872%2013.4124%2014.4125C13.7872%2014.0377%2013.9984%2013.5299%2014%2013V5.41C13.9979%205.01266%2013.8399%204.63202%2013.56%204.35ZM10.5%205C10.3674%205%2010.2402%204.94732%2010.1464%204.85355C10.0527%204.75979%209.99998%204.63261%209.99998%204.5V2.21L12.79%205H10.5Z%27%2F%3E%3Cpath%20d%3D%27M3.47798%2014.978C3.34548%2014.9777%203.21852%2014.9248%203.12498%2014.831L1.14598%2012.854C1.09942%2012.8076%201.06247%2012.7524%201.03727%2012.6916C1.01206%2012.6309%200.999084%2012.5658%200.999084%2012.5C0.999084%2012.4342%201.01206%2012.3691%201.03727%2012.3084C1.06247%2012.2476%201.09942%2012.1924%201.14598%2012.146L3.14598%2010.146C3.23986%2010.0521%203.3672%209.99937%203.49998%209.99937C3.63275%209.99937%203.76009%2010.0521%203.85398%2010.146C3.94787%2010.2399%204.00061%2010.3672%204.00061%2010.5C4.00061%2010.6328%203.94787%2010.7601%203.85398%2010.854L2.20698%2012.5L3.83198%2014.124C3.90209%2014.1939%203.94985%2014.2831%203.96922%2014.3802C3.98858%2014.4773%203.97868%2014.578%203.94076%2014.6695C3.90284%2014.7609%203.83862%2014.8391%203.75623%2014.894C3.67384%2014.9489%203.577%2014.9782%203.47798%2014.978Z%27%2F%3E%3Cpath%20d%3D%27M7.52198%2014.978C7.42296%2014.9782%207.32611%2014.9489%207.24372%2014.894C7.16134%2014.8391%207.09711%2014.7609%207.05919%2014.6695C7.02128%2014.578%207.01137%2014.4773%207.03074%2014.3802C7.05011%2014.2831%207.09787%2014.1939%207.16798%2014.124L8.79298%2012.5L7.14598%2010.854C7.05209%2010.7601%206.99935%2010.6328%206.99935%2010.5C6.99935%2010.3672%207.05209%2010.2399%207.14598%2010.146C7.23986%2010.0521%207.3672%209.99937%207.49998%209.99937C7.63275%209.99937%207.76009%2010.0521%207.85398%2010.146L9.85398%2012.146C9.90054%2012.1924%209.93748%2012.2476%209.96269%2012.3084C9.9879%2012.3691%2010.0009%2012.4342%2010.0009%2012.5C10.0009%2012.5658%209.9879%2012.6309%209.96269%2012.6916C9.93748%2012.7524%209.90054%2012.8076%209.85398%2012.854L7.87498%2014.831C7.78144%2014.9248%207.65447%2014.9777%207.52198%2014.978Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="file"][data-navigation-file-kind="md"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M3%203C3%201.89543%203.89543%201%205%201H8.58579C8.98361%201%209.36514%201.15804%209.64645%201.43934L12.5607%204.35355C12.842%204.63486%2013%205.01639%2013%205.41421V13C13%2014.1046%2012.1046%2015%2011%2015H5C3.89543%2015%203%2014.1046%203%2013V3ZM5%202C4.44772%202%204%202.44772%204%203V13C4%2013.5523%204.44772%2014%205%2014H11C11.5523%2014%2012%2013.5523%2012%2013V6H9.5C8.67157%206%208%205.32843%208%204.5V2H5ZM9.5%205H11.7929L9%202.20711V4.5C9%204.77614%209.22386%205%209.5%205ZM5.5%208C5.22386%208%205%208.22386%205%208.5C5%208.77614%205.22386%209%205.5%209H10.5C10.7761%209%2011%208.77614%2011%208.5C11%208.22386%2010.7761%208%2010.5%208H5.5ZM5%2010.5C5%2010.2239%205.22386%2010%205.5%2010H10.5C10.7761%2010%2011%2010.2239%2011%2010.5C11%2010.7761%2010.7761%2011%2010.5%2011H5.5C5.22386%2011%205%2010.7761%205%2010.5ZM5.5%2012C5.22386%2012%205%2012.2239%205%2012.5C5%2012.7761%205.22386%2013%205.5%2013H10.5C10.7761%2013%2011%2012.7761%2011%2012.5C11%2012.2239%2010.7761%2012%2010.5%2012H5.5Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) a[data-navigation-kind="line"] {
+  --navigation-link-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M10.478%201.647a.5.5%200%201%200-.956-.294l-4%2013a.5.5%200%200%200%20.956.294zM4.854%204.146a.5.5%200%200%201%200%20.708L1.707%208l3.147%203.146a.5.5%200%200%201-.708.708l-3.5-3.5a.5.5%200%200%201%200-.708l3.5-3.5a.5.5%200%200%201%20.708%200m6.292%200a.5.5%200%200%200%200%20.708L14.293%208l-3.147%203.146a.5.5%200%200%200%20.708.708l3.5-3.5a.5.5%200%200%200%200-.708l-3.5-3.5a.5.5%200%200%200-.708%200%27%2F%3E%3C%2Fsvg%3E");
+}
+
+:is(.description, .catalog-caption) .navigation-link-icon {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: calc(100% + 6px);
+  width: 15px;
+  height: 15px;
+  transform: translateY(-50%);
+  opacity: 0;
+  filter: drop-shadow(var(--catalog-link-icon-shadow));
+  pointer-events: none;
+}
+
+/* Маска принадлежит внутреннему рисунку, поэтому внешняя тень не обрезается ею. */
+:is(.description, .catalog-caption) .navigation-link-icon::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--navigation-link-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'/%3E")) center / contain no-repeat;
+  mask: var(--navigation-link-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'/%3E")) center / contain no-repeat;
+  pointer-events: none;
+}
+
+:is(.description, .catalog-caption) a[data-navigation-link]:is(:hover, :focus-visible) {
+  color: var(--accent);
+  outline-color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+:is(.description, .catalog-caption) a[data-navigation-link]:is(:hover, :focus-visible)>.navigation-link-icon {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :is(.description, .catalog-caption) a[data-navigation-link],
+  :is(.description, .catalog-caption) .navigation-link-icon {
+    transition: color 160ms, text-decoration-color 160ms, opacity 160ms;
+  }
+}
+
+.node-label {
+  min-width: 0;
+}
+
+.tree-row .node-label {
+  flex: none;
+  min-width: max-content;
+  white-space: nowrap;
+}
+
+#docs-title>.node-label,
+.doc-heading>.node-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.kind-icon {
+  flex: none;
+  align-self: center;
+  width: 15px;
+  height: 15px;
+  margin-right: 6px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.repository-row>.repository-loader {
+  flex: none;
+  align-self: center;
+  width: 15px;
+  margin-right: 6px;
+}
+
+.kind-icon[hidden] {
+  display: none;
+}
+
+.unavailable-lock {
+  margin-inline: .5ch 0;
+  color: var(--icon-class);
+}
+
+.icon-class {
+  color: var(--icon-class);
+}
+
+.icon-interface {
+  color: var(--icon-interface);
+}
+
+.icon-enum {
+  color: var(--icon-enum);
+}
+
+.icon-field {
+  color: var(--icon-field);
+}
+
+.icon-method {
+  color: var(--icon-method);
+}
+
+.icon-constructor {
+  color: var(--icon-method);
+}
+
+.icon-enum-member {
+  color: var(--icon-enum-member);
+}
+
+.description {
+  margin: 0;
+  padding: 0 12px;
+  background: var(--tree-guides, none);
+  background-origin: content-box;
+  font-size: calc(14px + var(--font-increase, 0px));
+  line-height: var(--row-height);
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+}
+
+.description-text {
+  flex: none;
+  min-width: max-content;
+}
+
+.tree-row.is-selected,
+.tree-row:focus-visible {
+  color: var(--accent);
+}
+
+.tree-row[aria-haspopup] {
+  cursor: pointer;
+}
+
+/* Панель документов лежит поверх каталога и сама управляет шириной. */
+.docs-panel[open] {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  width: var(--docs-width, 50%);
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--line);
+  color: inherit;
+  overflow: hidden;
+}
+
+.docs-resize {
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 -1px;
+  width: 7px;
+  outline: none;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.docs-resize::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1px;
+  background: var(--line);
+}
+
+.docs-resize:hover::after,
+.docs-resize:focus-visible::after {
+  background: var(--line);
+}
+
+.docs-heading {
+  --control-gap: 16px;
+  grid-row: 1;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: calc(13px + var(--font-increase, 0px));
+  overflow-wrap: anywhere;
+}
+
+#docs-close {
+  flex: none;
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+#docs-close:hover,
+#docs-close:focus-visible {
+  color: var(--strong);
+}
+
+#docs-title {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.docs-title-group {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.docs-version {
+  margin: 3px 0 0;
+  font-size: calc(11px + var(--font-increase, 0px));
+  line-height: 16px;
+}
+
+.docs-body {
+  grid-row: 4;
+  min-height: 0;
+  padding: 15px;
+  padding-left: 3px;
+  overflow: auto;
+  outline: none;
+}
+
+.docs-actions {
+  flex: none;
+}
+
+/* Достигнутый порог удержания отмечает живую цель; действие выполняет её владелец после отпускания. */
+[data-hold-ready] {
+  color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* Значение проходит в ShadowRoot единственных настроек; открытость отражает PageAppearance по прежней Panel. */
+html[data-preferences-placement="footer"][data-information-open="true"] {
+  --footer-journal-display: none;
+}
+
+/* Прежние hover и клавиатурный фокус верхней панели проходят в ShadowRoot настроек через параметры. */
+@media (hover: hover) and (pointer: fine) {
+  html[data-preferences-placement="header"] {
+    --site-navigation-opacity: 0;
+    --site-navigation-events: none;
+  }
+
+  html[data-preferences-placement="header"]:is([data-header-pointer-over="true"], [data-header-focus-visible="true"]) {
+    --site-navigation-opacity: 1;
+    --site-navigation-events: auto;
+  }
+}
+
+.document-toolbar {
+  min-width: 0;
+  overflow: hidden;
+  grid-row: 2;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.segmented {
+  padding: 3px;
+  border-radius: 8px;
+}
+
+.segmented:not([hidden]) {
+  display: flex;
+  gap: 2px;
+}
+
+.segmented button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1 0 0;
+  min-width: calc(6ch + 16px);
+  height: 26px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: calc(11px + var(--font-increase, 0px));
+  line-height: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.segmented button[aria-selected="true"],
+.segmented button[aria-pressed="true"] {
+  color: var(--strong);
+  background: var(--control);
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.segmented button:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
+}
+
+/* Вид файла обозначается выбранной заливкой; горячая клавиша не оставляет рамку на прежней вкладке. */
+#source-tabs button:focus-visible {
+  outline: none;
+}
+
+.segmented button:disabled {
+  opacity: .65;
+  cursor: default;
+}
+
+.document-tabs {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: overlay;
+  scrollbar-width: none;
+}
+
+.document-tabs button {
+  min-width: var(--tab-width, calc(12ch + 32px));
+}
+
+.document-mode {
+  flex: none;
+  width: 24px;
+  height: 28px;
+}
+
+.document-mode:hover,
+.document-mode:focus-visible {
+  color: var(--strong);
+}
+
+.document-mode[data-mode="html"] .mode-source,
+.document-mode[data-mode="source"] .mode-html {
+  display: none;
+}
+
+.document-mode svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.document-lock[hidden] {
+  display: none;
+}
+
+.document-lock {
+  width: 11px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.document-state,
+.document-rendering-error {
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.7;
+}
+
+.docs-body.is-private {
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.document-private {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.document-access-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.document-private .document-state {
+  margin: 0;
+}
+
+.private-lock {
+  width: 52px;
+  height: 52px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .45;
+}
+
+.document-retry {
+  --control-padding: 7px 12px;
+  --control-radius: 7px;
+  --control-background: var(--bar);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  outline: none;
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+.document-retry:hover,
+.document-retry:focus-visible {
+  border-color: var(--scroll);
+  background: var(--control);
+}
+
+.document-retry .control-icon {
+  --icon-size: 13px;
+}
+
+.document-error .loading-icon .svg-glyph {
+  stroke-width: 1.3;
+}
+
+.document-html,
+.document-source {
+  font-family: inherit;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.document-html h1,
+.document-html h2,
+.document-html h3,
+.document-html h4,
+.document-html h5,
+.document-html h6 {
+  margin: 0 0 .6em;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.document-html h1 {
+  color: color-mix(in srgb, var(--accent) 80%, #fff);
+}
+
+.document-html h2 {
+  color: var(--accent);
+}
+
+.document-html h3 {
+  color: color-mix(in srgb, var(--text) 75%, var(--accent));
+}
+
+.document-html h4 {
+  color: color-mix(in srgb, var(--muted) 85%, var(--accent));
+}
+
+.document-html h5,
+.document-html h6 {
+  color: var(--muted);
+}
+
+.document-section {
+  margin-block: 1em;
+}
+
+.document-html p,
+.document-html ul,
+.document-html ol,
+.document-html pre,
+.document-html table,
+.document-html blockquote {
+  margin: 0 0 .8em;
+}
+
+.document-html ul,
+.document-html ol {
+  padding-inline-start: 2em;
+}
+
+.document-html a[href] {
+  color: color-mix(in srgb, var(--accent) 75%, var(--muted));
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+  text-underline-offset: 2px;
+}
+
+.document-html code,
+.document-source code {
+  font: inherit;
+}
+
+.document-html pre,
+.document-source {
+  max-width: 100%;
+  overflow: auto;
+  white-space: pre;
+}
+
+.document-html pre {
+  font: inherit;
+}
+
+.document-source {
+  margin: 0;
+}
+
+.document-html pre {
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--bar);
+}
+
+.document-html blockquote {
+  padding-inline-start: 12px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+}
+
+.document-html table {
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+  border-collapse: collapse;
+}
+
+.document-html th,
+.document-html td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.doc-heading {
+  margin-bottom: 8px;
+  font-size: calc(13px + var(--font-increase, 0px));
+  overflow-wrap: anywhere;
+}
+
+.doc-copy {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.7;
+}
+
+.empty-doc {
+  color: var(--muted);
+}
+
+.doc-children {
+  margin-top: 20px;
+  padding-left: 16px;
+}
+
+.doc-section+.doc-section {
+  margin-top: 20px;
+}
+
+/* У выбранного объявления сохраняем дочерний HXDoc, сокращая только отступы. */
+.doc-compact .doc-children {
+  margin-top: 8px;
+  padding-left: 12px;
+}
+
+.doc-compact .doc-section+.doc-section {
+  margin-top: 9px;
+}
+
+.doc-compact .doc-heading {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 760px) {
+  .docs-resize {
+    display: none;
+  }
+
+  .docs-panel[open] {
+    position: fixed;
+    inset: var(--page-padding, var(--gutter));
+    width: auto;
+    height: auto;
+    border: var(--frame-width, 1px) solid var(--line);
+    border-radius: var(--frame-radius, 11px);
+  }
+
+  .docs-panel::backdrop {
+    background: var(--backdrop);
+  }
+}
+
+/* Нижний бар показывает адрес выбранного узла и содержит настройки. */
+.terminal-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  overflow: hidden;
+  padding: 12px var(--controls-inset);
+  border-top: 1px solid var(--line);
+}
+
+.footer-content {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.github-link {
+  display: block;
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  outline: none;
+  text-decoration: none;
+}
+
+.github-destination {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+#github-link[data-lock-state="closed"] {
+  --lock-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M11%207V5C11%203.346%209.654%202%208%202C6.346%202%205%203.346%205%205V7C3.897%207%203%207.897%203%209V12C3%2013.103%203.897%2014%205%2014H11C12.103%2014%2013%2013.103%2013%2012V9C13%207.897%2012.103%207%2011%207ZM6%205C6%203.897%206.897%203%208%203C9.103%203%2010%203.897%2010%205V7H6V5ZM12%2012C12%2012.551%2011.551%2013%2011%2013H5C4.449%2013%204%2012.551%204%2012V9C4%208.449%204.449%208%205%208H11C11.551%208%2012%208.449%2012%209V12ZM9%2010C9%2010.552%208.552%2011%208%2011C7.448%2011%207%2010.552%207%2010C7%209.448%207.448%209%208%209C8.552%209%209%209.448%209%2010Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+#github-link[data-lock-state="open"] {
+  --lock-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20fill-rule%3D%27evenodd%27%20d%3D%27M5%207H11C12.103%207%2013%207.897%2013%209V12C13%2013.103%2012.103%2014%2011%2014H5C3.897%2014%203%2013.103%203%2012V9C3%207.897%203.897%207%205%207ZM12%2012C12%2012.551%2011.551%2013%2011%2013H5C4.449%2013%204%2012.551%204%2012V9C4%208.449%204.449%208%205%208H11C11.551%208%2012%208.449%2012%209V12ZM9%2010C9%2010.552%208.552%2011%208%2011C7.448%2011%207%2010.552%207%2010C7%209.448%207.448%209%208%209C8.552%209%209%209.448%209%2010ZM10%207V5C10%203.346%2011.346%202%2013%202C14.654%202%2016%203.346%2016%205V6H15V5C15%203.897%2014.103%203%2013%203C11.897%203%2011%203.897%2011%205V7H10Z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+#github-link[data-lock-state]::before,
+#github-link[data-lock-state]::after {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 4px;
+  vertical-align: -3px;
+  background: currentColor;
+  -webkit-mask: var(--lock-icon) center / contain no-repeat;
+  mask: var(--lock-icon) center / contain no-repeat;
+}
+
+#github-link[data-lock-state]::after {
+  content: "";
+}
+
+.github-link {
+  flex: 1;
+  min-width: 0;
+}
+
+.github-path {
+  display: none;
+}
+
+.github-address {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.terminal-footer[data-settings-placement="header"].help-collapsed .github-link,
+.terminal-footer[data-settings-placement="footer"][data-settings-expanded="false"] .github-link {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+}
+
+:is(.terminal-footer[data-settings-placement="header"].help-collapsed,
+  .terminal-footer[data-settings-placement="footer"][data-settings-expanded="false"]) #github-link[data-lock-state]::before {
+  content: "";
+}
+
+:is(.terminal-footer[data-settings-placement="header"].help-collapsed,
+  .terminal-footer[data-settings-placement="footer"][data-settings-expanded="false"]) #github-link[data-lock-state]::after {
+  content: none;
+}
+
+.terminal-footer[data-settings-placement="footer"][data-settings-expanded="false"] .github-address {
+  display: none;
+}
+
+.terminal-footer[data-settings-placement="footer"][data-settings-expanded="false"] .github-path {
+  display: inline;
+}
+
+.footer-button {
+  flex: none;
+  width: 24px;
+  height: 20px;
+}
+
+.footer-button svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-button:hover,
+.footer-button:focus-visible {
+  color: var(--strong);
+}
+
+.github-link:hover,
+.github-link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.footer-controls {
+  --control-gap: 6px;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+}
+
+.footer-controls button[hidden] {
+  display: none;
+}
+
+.footer-controls li:has(button[hidden]) {
+  display: none;
+}
+
+.footer-settings {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: stretch;
+  padding-top: 8px;
+}
+
+.footer-settings:not([hidden]) {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.footer-settings site-preferences {
+  min-width: 0;
+}
+
+.site-commit {
+  width: 100%;
+  margin: 4px 0 0;
+  font-size: calc(10px + var(--font-increase, 0px));
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.site-commit a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-commit a:hover,
+.site-commit a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Плашка остаётся видимой при свёрнутых настройках и переносе нижней панели в PiP. */
+.site-update {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: calc(11px + var(--font-increase, 0px));
+}
+
+.site-update[hidden],
+#site-update-retry[hidden] {
+  display: none;
+}
+
+.site-update button {
+  --control-padding: 3px 8px;
+  --control-radius: 4px;
+  color: inherit;
+}
+
+.terminal-footer[data-settings-placement="footer"] {
+  overflow: visible;
+  position: relative;
+  z-index: 3;
+}
+
+#settings-toggle[hidden] {
+  display: none;
+}
+
+:is(#settings-toggle, #help-toggle)[aria-expanded="true"] .control-icon {
+  transform: rotate(180deg);
+}
+
+.terminal-footer.help-collapsed {
+  row-gap: 0;
+}
+
+.terminal-footer.help-collapsed .footer-content {
+  row-gap: 0;
+}
+
+.help-collapsed .github-destination {
+  grid-column: 1;
+}
+
+.help-collapsed .footer-controls {
+  grid-row: 1;
+  align-self: center;
+}
+
+.keyboard-help {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  font-size: calc(11px + var(--font-increase, 0px));
+  line-height: 1.6;
+}
+
+.keyboard-help:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+}
+
+.docs-panel .terminal-footer {
+  grid-row: 5;
+}
+
+.keyboard-help span {
+  white-space: nowrap;
+}
+
+kbd {
+  font: inherit;
+  color: var(--text);
+}
+
+@media (max-width: 520px) {
+  :root {
+    --row-height: calc(16px + var(--font-increase));
+  }
+
+  .terminal {
+    border-radius: var(--frame-radius, 11px);
+  }
+
+  .titlebar {
+    grid-template-columns: auto 1fr;
+    padding: 12px var(--controls-inset);
+    font-size: calc(12px + var(--font-increase, 0px));
+  }
+
+  .titlebar-caption {
+    display: none;
+  }
+
+  .window-controls {
+    gap: 6px;
+  }
+
+  .traffic {
+    width: 11px;
+    height: 11px;
+  }
+
+  summary.tree-row {
+    padding: 0 8px;
+    font-size: calc(13px + var(--font-increase, 0px));
+  }
+
+  .tree-leaf>button.tree-row.control {
+    --control-padding: 0 8px;
+  }
+
+  .tree-leaf {
+    font-size: calc(13px + var(--font-increase, 0px));
+  }
+
+  .tree-leaf>.catalog-caption {
+    padding-inline-end: 8px;
+  }
+
+  .description {
+    padding: 0 8px;
+    font-size: calc(13px + var(--font-increase, 0px));
+  }
+
+  .keyboard-help:not([hidden]) {
+    gap: 5px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .segmented button,
+  .document-mode,
+  #docs-close,
+  .footer-button {
+    transition: color 160ms, background-color 160ms, box-shadow 160ms;
+  }
+
+  .traffic {
+    transition: background-color 160ms;
+  }
+
+  #settings-toggle {
+    transition: opacity 160ms, color 160ms;
+  }
+}
+
+/* Отказ загрузки фрагмента остаётся доступным поверх каталога и даёт повтор. */
+.startup-status {
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  inset-inline: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bar);
+  font-size: calc(12px + var(--font-increase, 0px));
+  line-height: 1.7;
+}
+
+.startup-status p {
+  margin: 0 0 8px;
+}
+
+.startup-status a {
+  color: var(--text);
+}
+
+.startup-status button {
+  --control-padding: 2px 6px;
+  --control-radius: 4px;
+  margin-left: 8px;
+}
+
+.docs-header menu li:has(> button[hidden]) {
+  display: none;
+}
+
+.source-retry-action {
+  width: 24px;
+  height: 28px;
+}
+
+.source-retry-action:hover,
+.source-retry-action:focus-visible {
+  color: var(--strong);
+}
+
+.source-retry-action .control-icon {
+  --icon-size: 18px;
+}
+
+.source-retry-action .source-retry-label {
+  display: none;
+}
+
+.source-retry-action:not(:has(.control-icon)) {
+  width: auto;
+  padding-inline: 4px;
+}
+
+.source-retry-action:not(:has(.control-icon)) .source-retry-label {
+  display: inline;
+}
+
+.docs-pip {
+  width: 24px;
+  height: 28px;
+}
+
+.docs-pip:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.docs-pip:hover:not(:disabled),
+.docs-pip:focus-visible {
+  color: var(--strong);
+}
+
+#docs-close {
+  width: 24px;
+  height: 28px;
+}
+
+#docs-close .control-icon {
+  --icon-size: 22px;
+}
+
+#docs-close .svg-glyph {
+  stroke-width: 2.5;
+}
+
+.keyboard-help li[hidden] {
+  display: none;
+}
+
+.keyboard-help button {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  color: inherit;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.keyboard-help button:hover,
+.keyboard-help button:focus-visible,
+.keyboard-help button[aria-expanded="true"] {
+  color: var(--text);
+}
+
+.keyboard-help .control-icon {
+  --icon-size: 12px;
+}
+
+.hint-arrows {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.hint-key {
+  font: inherit;
+  color: var(--text);
+}
+
+.loading-icon {
+  display: grid;
+  place-items: center;
+  opacity: .45;
+}
+
+.loading-icon .control-icon {
+  --icon-size: 52px;
+}
+
+/* Компактный экран и PiP используют один нижний набор управления. */
+@media (max-width: 760px) {
+  .titlebar {
+    display: none;
+  }
+
+  .terminal {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  #project-tree {
+
+    touch-action: pan-y;
+  }
+
+
+  .keyboard-help,
+  .keyboard-help:not([hidden]),
+  #help-toggle {
+    display: none;
+  }
+
+  .terminal-footer,
+  .terminal-footer .footer-content {
+    row-gap: 0;
+  }
+
+  .terminal-footer {
+    padding: 7px var(--controls-inset);
+    column-gap: 8px;
+  }
+
+  .terminal-footer .github-destination {
+    grid-column: 1;
+    align-items: center;
+  }
+
+  .terminal-footer #settings-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .terminal-footer .footer-controls {
+    display: flex;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .footer-settings {
+    grid-row: 2;
+  }
+
+  .site-update {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 10px;
+  }
+
+  .site-update:has(#site-update-retry[hidden]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #site-update-message {
+    min-width: 0;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+
+  #site-update-retry {
+    min-height: 44px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+}
+
+:root[data-pip-mode] {
+  --page-padding: 0px;
+  --window-limit: 100%;
+  --frame-width: 0px;
+  --frame-radius: 0px;
+  --frame-shadow: none;
+  --controls-inset: 12px;
+}
+
+:root[data-pip-mode] .titlebar,
+:root[data-pip-mode] .keyboard-help,
+:root[data-pip-mode] #help-toggle {
+  display: none;
+}
+
+:root[data-pip-mode] .terminal {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+:root[data-pip-mode] .terminal-footer {
+  padding: 7px var(--controls-inset);
+  gap: 0 8px;
+}
+
+:root[data-pip-mode] .footer-content {
+  gap: 0 8px;
+}
+
+:root[data-pip-mode] .github-destination {
+  grid-column: 1;
+}
+
+:root[data-pip-mode] .footer-controls {
+  grid-row: 1;
+  align-self: center;
+}
+
+:root[data-pip-mode] #settings-toggle {
+  width: 44px;
+  height: 44px;
+}
+
+:root[data-pip-mode] .footer-settings {
+  grid-row: 2;
+}
+
+:root[data-pip-mode][data-window-active="false"] #settings-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pip-traffic:disabled {
+  background: light-dark(#b5b8bc, #585b5f);
+}
+
+.ui-tooltip {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 16px));
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: light-dark(#fff, #242831);
+  color: var(--text);
+  box-shadow: 0 4px 16px var(--shadow);
+  font: calc(11px + var(--font-increase, 0px))/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1000;
+}
+
+.ui-tooltip[hidden] {
+  display: none;
+}
+
+.doc-section>.doc-children:first-child {
+  margin-top: 0;
+}
+
+.doc-section>.doc-copy:first-child {
+  margin-left: 12px;
+}
+
+.doc-heading:last-child {
+  margin-bottom: 0;
+}
+
+.copy-button {
+  height: 18px;
+}
+
+.pip-docs-host {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pip-docs-host[hidden] {
+  display: none;
+}
+
+:root[data-pip-mode="docs"] body {
+  padding: 0;
+  gap: 0;
+}
+
+:root[data-pip-mode="docs"] .docs-panel[open] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+
+:root[data-pip-mode="docs"] .docs-resize {
+  display: none;
+}
+
+.github-loading-icon {
+  display: block;
+  width: 52px;
+  height: 52px;
+}
+
+.github-loading-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
+
+.github-loading-icon .brand-logo-dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .github-loading-icon .brand-logo-dark {
+  display: block;
+}
+
+:root[data-theme="dark"] .github-loading-icon .brand-logo-light {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .github-loading-icon .brand-logo-dark {
+    display: block;
+  }
+
+  :root:not([data-theme]) .github-loading-icon .brand-logo-light {
+    display: none;
+  }
+}
+
+.docs-panel>* {
+  min-width: 0;
+}

@@ -1,0 +1,17 @@
+{
+  "protocol": 1,
+  "name": "octocat",
+  "output": "public/js/octocat.mjs",
+  "apiVersion": "2022-11-28",
+  "sessionStorageKey": "github-octocat-session-v1",
+  "autoRestoreStorageKey": "github-octocat-auto-restore",
+  "dedicatedSessionMarkerKey": "github-octocat-dedicated-active-v1",
+  "helloTimeoutMs": 3000,
+  "requestTimeoutMs": 25000,
+  "cryptoTimeoutMs": 60000,
+  "renewTimeoutMs": 3000,
+  "workerRequestTimeoutMs": 20000,
+  "stageTtlMs": 30000,
+  "reloadGraceMs": 30000,
+  "maxStages": 8
+}

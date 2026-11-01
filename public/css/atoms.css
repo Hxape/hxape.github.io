@@ -1,0 +1,140 @@
+/* Основной текст получает существующий цвет содержимого выбранной темы. */
+.primary {
+  color: var(--text);
+}
+
+/* Выделенный текст получает существующий усиленный цвет выбранной темы. */
+.strong {
+  color: var(--strong);
+}
+
+/* Пояснение или второстепенное действие получает приглушённый цвет темы. */
+.muted {
+  color: var(--muted);
+}
+
+/* Поверхность содержимого получает фоновый цвет выбранной темы. */
+.surface {
+  background: var(--surface);
+}
+
+/* Панель управления получает фоновый цвет верхней и нижней полосы темы. */
+.bar {
+  background: var(--bar);
+}
+
+/* Кнопка со значком центрирует содержимое сеткой, убирает отступ, рамку, обводку и заливку, обозначает нажатие указателем. */
+.icon-button:where(:not([hidden])) {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Текстовое действие получает рамку, скругление, заливку, отступы, унаследованный шрифт и указатель нажатия. */
+.control {
+  --control-padding: 5px 8px;
+  --control-radius: 5px;
+  --control-background: var(--control);
+  --control-border: 1px solid var(--line);
+  padding: var(--control-padding);
+  border: var(--control-border);
+  border-radius: var(--control-radius);
+  background: var(--control-background);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Текстовое поле занимает доступную ширину, может сжиматься, получает отступы, рамку, скругление, заливку и унаследованный шрифт. */
+.field {
+  --field-padding: 3px 8px;
+  width: 100%;
+  min-width: 0;
+  padding: var(--field-padding);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bar);
+  font: inherit;
+}
+
+/* Меню располагается у правого края под действием, получает слой, отступы, рамку, скругление, тень и выравнивание текста слева. */
+.popover {
+  --popover-padding: 12px;
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 12px);
+  right: 0;
+  padding: var(--popover-padding);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px var(--shadow);
+  text-align: left;
+}
+
+/* Перечень убирает маркеры и внешние и внутренние отступы. */
+.plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Строка управления размещает видимые элементы рядом, выравнивает их по центру и задаёт промежуток. */
+.control-row:where(:not([hidden])) {
+  --control-gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: var(--control-gap);
+}
+
+/* Строка подписи размещает видимые значок и текст рядом на общей базовой линии. */
+.label-row:where(:not([hidden])) {
+  display: flex;
+  align-items: baseline;
+}
+
+/* Части формы располагаются последовательно в сетке с заданным промежутком. */
+.form-stack:where(:not([hidden])) {
+  --stack-gap: 10px;
+  display: grid;
+  gap: var(--stack-gap);
+}
+
+/* Текст не выделяется указателем в обычном и WebKit-браузере. */
+.nonselectable {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Область чтения сохраняет выделение и копирование текста внутри обычного документа или ShadowRoot. */
+.text-display {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Поля сохраняют редактирование и выделение значения при общем запрете выделения интерфейса. */
+:where(input, textarea, [contenteditable]:not([contenteditable="false"])) {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Команды и вкладки остаются служебными даже внутри области показа текста. */
+:where(button, [role="tab"], .control, .icon-button) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Доступная подпись остаётся для вспомогательного чтения: абсолютная область 1×1 с отрицательным внешним отступом обрезается, текст не переносится, внутренний отступ и рамка убраны. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

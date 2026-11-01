@@ -1,0 +1,63 @@
+name: Очистка сборок
+
+on:
+  workflow_run:
+    workflows: [pages-build-deployment, pages build and deployment]
+    types: [completed]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  actions: write
+
+concurrency:
+  group: cleanup-workflow-runs
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Сохранить последнюю успешную сборку
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: ruby {0}
+        run: |
+          require 'json'
+          require 'open3'
+
+          def api(*arguments)
+            output, error, status = Open3.capture3('gh', 'api', *arguments)
+            abort error unless status.success?
+            output
+          end
+
+          endpoint = "repos/#{ENV.fetch('GITHUB_REPOSITORY')}/actions/runs"
+          current_id = Integer(ENV.fetch('GITHUB_RUN_ID'))
+          cleanup_id = JSON.parse(api("#{endpoint}/#{current_id}")).fetch('workflow_id')
+
+          # Сначала прочитать все страницы: удаление сдвигает их границы.
+          pages = JSON.parse(api("#{endpoint}?per_page=100", '--paginate', '--slurp'))
+          completed = pages.flat_map { |page| page.fetch('workflow_runs') }
+            .select { |run| run.fetch('status') == 'completed' }
+
+          # Успех очистки не считается успешной сборкой; повтор меняет run_started_at.
+          keep = completed.select do |run|
+            run.fetch('workflow_id') != cleanup_id && run.fetch('conclusion') == 'success'
+          end.max_by { |run| [run.fetch('run_started_at'), run.fetch('id')] }
+
+          unless keep
+            puts 'Успешных сборок нет; удаление пропущено.'
+            exit
+          end
+
+          puts "Сохранить запуск #{keep.fetch('id')}"
+          completed.each do |run|
+            id = run.fetch('id')
+            next if id == keep.fetch('id') || id == current_id
+
+            api("#{endpoint}/#{id}", '--method', 'DELETE')
+            puts "Удалён запуск #{id}"
+          end

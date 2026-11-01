@@ -1,0 +1,1035 @@
+/* Переходы и сообщения остаются в верхней панели, не занимая область чтения. */
+.docs-heading {
+  flex-wrap: nowrap;
+  --control-gap: 10px;
+}
+
+.docs-reading-controls {
+  flex: none;
+  --control-gap: 4px;
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.docs-actions {
+  --control-gap: 8px;
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.docs-actions button,
+.docs-reading-controls button {
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.docs-actions button:disabled,
+.docs-reading-controls button:disabled {
+  opacity: .35;
+}
+
+.navigation-status {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: calc(11px + var(--font-increase, 0px));
+}
+
+/* Один временный popup перемещается вместе с прежним host панели. */
+.navigation-popup {
+  position: fixed;
+  width: min(700px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: calc(12px + var(--font-increase, 0px));
+  overflow: auto;
+}
+
+.navigation-popup::backdrop {
+  background: var(--backdrop);
+}
+
+/* Фокус в popup обозначается подсказкой, без нативной или акцентной рамки. */
+.navigation-popup :focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.navigation-popup .control-icon,
+.navigation-search .control-icon {
+  --icon-size: 24px;
+}
+
+.navigation-heading {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.navigation-heading h2 {
+  flex: 1;
+  margin: 0;
+  font: inherit;
+}
+
+.navigation-heading-row {
+  --control-gap: 4px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+/* Все знаки переносятся в общем ряду по ширине шапки, без отдельных растянутых строк. */
+.navigation-heading-row>.navigation-group-actions,
+.navigation-heading-row>.navigation-collection-actions {
+  display: contents;
+}
+
+.navigation-popup-close {
+  margin-inline-start: auto;
+}
+
+/* В самой узкой шапке пять областей по 44px помещаются рядом без отдельного ряда закрытия. */
+@media (max-width: 360px) {
+  .navigation-heading-row {
+    --control-gap: 0px;
+  }
+}
+
+.navigation-group-actions button[aria-expanded="true"] {
+  color: var(--accent);
+}
+
+.navigation-widget-controls {
+  margin-block-start: 8px;
+}
+
+.history-controls,
+.history-controls-options,
+.bookmark-group-control {
+  --stack-gap: 6px;
+}
+
+.history-controls-primary {
+  justify-content: space-between;
+}
+
+.history-collect {
+  min-width: 0;
+}
+
+.history-controls input[type="checkbox"] {
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.history-controls :is(select, input[type="number"]),
+.bookmark-group-control .field {
+  --field-padding: 3px 8px;
+  font-size: inherit;
+}
+
+.history-controls label>span {
+  flex: 1;
+}
+
+.history-controls select {
+  flex: 2;
+  min-width: 0;
+}
+
+.history-controls .history-limit {
+  flex: none;
+  width: 7ch;
+}
+
+.history-exclusions {
+  margin-block-start: 6px;
+}
+
+.history-exclusions summary {
+  cursor: pointer;
+}
+
+.history-exclusion-count {
+  margin-inline-start: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.history-exclusion-list {
+  padding-block-start: 4px;
+}
+
+.history-exclusion-row {
+  padding-block: 3px;
+}
+
+.history-exclusion-row>span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.history-exclusion-row button {
+  flex: none;
+  --control-padding: 4px 6px;
+  --control-background: transparent;
+}
+
+.bookmark-group-control select {
+  flex: 1;
+  min-width: 0;
+}
+
+.bookmark-group-form {
+  --control-gap: 4px;
+}
+
+.bookmark-group-form input {
+  flex: 1 1 12ch;
+}
+
+.bookmark-group-form .control {
+  --control-padding: 5px 7px;
+  --control-background: transparent;
+}
+
+.navigation-entry .navigation-group-assignment {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+
+/* Нативный выбор занимает ту же правую ячейку, что удаление, и открывается поверх знака переноса. */
+.navigation-group-assignment select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.navigation-group-assignment:focus-within {
+  outline: none;
+}
+
+.navigation-confirm p {
+  margin: 0;
+}
+
+.navigation-confirm {
+  margin-block: 6px;
+}
+
+.navigation-transfer {
+  --stack-gap: 10px;
+  padding: 16px;
+}
+
+.navigation-transfer :is(h3, p) {
+  margin: 0;
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+
+.navigation-json {
+  --field-padding: 8px;
+  width: 100%;
+  min-height: 220px;
+  max-height: 50dvh;
+  resize: vertical;
+  font: inherit;
+  font-family: ui-monospace, monospace;
+  white-space: pre;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.navigation-transfer-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.navigation-history-heading {
+  --navigation-detail-icon-size: 20px;
+  gap: 4px;
+}
+
+.navigation-history-count {
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.navigation-history-files .navigation-list {
+  padding-inline: 0;
+}
+
+.navigation-history-ref {
+  margin-inline-start: 12px;
+}
+
+.navigation-list,
+.navigation-tree {
+  margin: 0;
+  padding: 4px 10px;
+}
+
+.navigation-tree .navigation-tree {
+  padding-inline-end: 0;
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--line);
+}
+
+.navigation-tree summary {
+  padding: 8px 4px;
+  cursor: pointer;
+}
+
+.navigation-entry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  border-top: 2px solid transparent;
+  user-select: none;
+}
+
+.navigation-entry[aria-current="true"] .navigation-name {
+  color: var(--accent);
+}
+
+.navigation-bookmark:hover {
+  color: var(--accent);
+}
+
+.navigation-bookmark-display,
+.navigation-bookmark-remove {
+  display: inline-flex;
+}
+
+.navigation-bookmark .navigation-bookmark-remove,
+.navigation-bookmark[aria-pressed="true"]:hover .navigation-bookmark-display {
+  display: none;
+}
+
+.navigation-bookmark[aria-pressed="true"]:hover .navigation-bookmark-remove {
+  display: inline-flex;
+}
+
+.navigation-entry.is-dragging {
+  opacity: .45;
+}
+
+.navigation-entry.drop-before {
+  border-top-color: var(--accent);
+}
+
+.navigation-drag {
+  flex: none;
+  touch-action: none;
+  cursor: grab;
+  font-size: 19px;
+}
+
+/* Узкая ручка остаётся первой колонкой и освобождает место для адреса на телефоне. */
+.navigation-popup .navigation-entry .navigation-drag {
+  min-width: 24px;
+  width: 24px;
+  padding-inline: 0;
+}
+
+.navigation-destination {
+  --control-padding: 8px 4px;
+  --control-border: 0;
+  --control-radius: 0;
+  --control-background: transparent;
+  display: grid;
+  flex: 1;
+  gap: 3px;
+  min-width: 0;
+  text-align: start;
+}
+
+.navigation-name,
+.navigation-detail {
+  overflow-wrap: anywhere;
+}
+
+.navigation-detail {
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+/* Готовые значки закладок заменяют слова вида, сохраняя компактную строку и цвета принятых значков. */
+.navigation-detail.has-icons {
+  --navigation-detail-icon-size: 20px;
+  --navigation-detail-line-height: 1.6;
+  line-height: var(--navigation-detail-line-height);
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+
+.navigation-detail-part {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.navigation-detail-part>span:last-child {
+  min-width: 0;
+}
+
+.navigation-detail-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--navigation-detail-icon-size);
+  height: var(--navigation-detail-icon-size);
+  line-height: 1;
+}
+
+/* Рамка равна высоте первой строки подписи, поэтому перенос текста не сдвигает центр значка. */
+.navigation-detail-part .navigation-detail-icon {
+  align-self: flex-start;
+  height: calc(1em * var(--navigation-detail-line-height));
+  line-height: inherit;
+}
+
+.navigation-detail-icon :is(svg, .kind-icon, .version-source-icon) {
+  width: var(--navigation-detail-icon-size);
+  height: var(--navigation-detail-icon-size);
+  margin: 0;
+}
+
+/* Область удаления 44px сохраняет прежнее внешнее место 36px и не растягивает строку. */
+.navigation-entry:has(.navigation-detail.has-icons)>.navigation-remove {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  margin-block: -4px;
+}
+
+/* Ожидание удаления сохраняет знак отмены, счётчик занимает его нижний правый край. */
+.navigation-entry .navigation-remove-pending {
+  position: relative;
+  color: var(--accent);
+}
+
+.navigation-remove-countdown {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-end: 1px;
+  padding-inline: 2px;
+  border-radius: 2px;
+  background: var(--surface);
+  font-size: calc(9px + var(--font-increase, 0px));
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.navigation-popup .icon-button {
+  flex: none;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.navigation-empty,
+.navigation-message {
+  margin: 12px 16px;
+  line-height: 1.6;
+}
+
+.navigation-message-action {
+  --control-padding: 0;
+  --control-border: 0;
+  --control-radius: 0;
+  --control-background: transparent;
+  margin-inline-start: 8px;
+}
+
+/* Поиск показывает только готовое состояние; форма и поле сохраняют собственные HTML-значения. */
+.navigation-popup.is-search {
+  width: min(480px, calc(100vw - 32px));
+  transform: translateY(var(--search-drag-y, 0px));
+}
+
+.navigation-popup.is-search[data-search-dragging] {
+  cursor: grabbing;
+}
+
+form[role="search"].navigation-search {
+  position: relative;
+  display: grid;
+  --search-inset: 12px;
+  margin: 0;
+  padding: var(--search-inset);
+  padding-top: 0px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.navigation-search-count {
+  grid-column: 3;
+  padding-inline: 6px;
+  font-size: calc(10px + var(--font-increase, 0px));
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  touch-action: none;
+}
+
+/* Отдельные поля вокруг ввода перехватывают жест Y, не накладывая touch-action на предка input. */
+.navigation-search-edge {
+  position: absolute;
+  z-index: 1;
+  touch-action: none;
+}
+
+.navigation-search-edge:is([data-edge="top"], [data-edge="bottom"]) {
+  inset-inline: 0;
+  height: var(--search-inset);
+}
+
+.navigation-search-edge[data-edge="top"] {
+  inset-block-start: 0;
+}
+
+.navigation-search-edge[data-edge="bottom"] {
+  inset-block-end: 0;
+}
+
+.navigation-search-edge:is([data-edge="start"], [data-edge="end"]) {
+  inset-block: var(--search-inset);
+  width: var(--search-inset);
+}
+
+.navigation-search-edge[data-edge="start"] {
+  inset-inline-start: 0;
+}
+
+.navigation-search-edge[data-edge="end"] {
+  inset-inline-end: 0;
+}
+
+.navigation-search-row {
+  --control-gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.navigation-search-field {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  --field-padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.navigation-search-prefix {
+  display: grid;
+  place-items: center;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: stretch;
+  touch-action: none;
+}
+
+/* Семантическая форма выбирает лупу в отдельной области, которая не принадлежит input. */
+form[role="search"] .navigation-search-prefix::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: var(--muted);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M11.742%2010.344a6.5%206.5%200%201%200-1.397%201.398h-.001q.044.06.098.115l3.85%203.85a1%201%200%200%200%201.415-1.414l-3.85-3.85a1%201%200%200%200-.115-.1zM12%206.5a5.5%205.5%200%201%201-11%200%205.5%205.5%200%200%201%2011%200%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Cpath%20d%3D%27M11.742%2010.344a6.5%206.5%200%201%200-1.397%201.398h-.001q.044.06.098.115l3.85%203.85a1%201%200%200%200%201.415-1.414l-3.85-3.85a1%201%200%200%200-.115-.1zM12%206.5a5.5%205.5%200%201%201-11%200%205.5%205.5%200%200%201%2011%200%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  pointer-events: none;
+}
+
+form[role="search"] .navigation-search-input {
+  --field-padding: 3px 8px;
+  width: 100%;
+  min-height: 28px;
+  border: 0;
+  background: transparent;
+  appearance: textfield;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.navigation-search-field:focus-within {
+  outline: none;
+}
+
+.navigation-search-edit {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+form[role="search"] .navigation-search-input:focus {
+  outline: 0;
+}
+
+.navigation-search-clear {
+  position: static;
+}
+
+.navigation-search-clear:disabled {
+  display: none;
+}
+
+.navigation-search-actions {
+  flex: none;
+  --control-gap: 0;
+}
+
+.navigation-search .navigation-search-actions .icon-button {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+}
+
+.navigation-search-actions>li {
+  flex: none;
+}
+
+.navigation-search-close {
+  margin-inline-start: auto;
+}
+
+.navigation-search-actions button[aria-pressed="true"] {
+  color: calc(var(--accent) * var(--muted));
+}
+
+.navigation-search-actions button:disabled {
+  opacity: .35;
+}
+
+/* Один найденный Range рисуется отдельным слоем, не меняя текст, выделение или раскладку исходника. */
+.docs-body {
+  position: relative;
+}
+
+.search-highlight-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.search-current-rect {
+  position: absolute;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
+  pointer-events: none;
+}
+
+/* Очистка удаляет запрос также из истории: единственная явная команда заменяет нативный cancel. */
+form[role="search"] .navigation-search-input::-webkit-search-cancel-button,
+form[role="search"] .navigation-search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+#docs-search-bar {
+  grid-row: 3;
+  min-width: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--bar);
+}
+
+form[role="search"].navigation-search.is-embedded {
+  --search-inset: 6px;
+  --icon-size: 18px;
+}
+
+.navigation-search.is-embedded .navigation-search-edge {
+  display: none;
+}
+
+.search-history-list {
+  padding: 4px 10px;
+}
+
+.search-history-entry {
+  --control-gap: 6px;
+}
+
+.search-history-query {
+  flex: 1;
+  min-width: 0;
+  text-align: start;
+  overflow-wrap: anywhere;
+  --control-border: 0;
+  --control-background: transparent;
+}
+
+.search-history-entry[aria-current="true"] .search-history-query {
+  color: var(--accent);
+}
+
+.doc-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.doc-heading a[href]:hover {
+  color: var(--accent);
+}
+
+.docs-title-group a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.docs-title-group a[href]:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 760px),
+(pointer: coarse) {
+
+  .docs-actions button,
+  .docs-reading-controls button,
+  .navigation-popup .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .docs-actions {
+    --control-gap: 4px;
+  }
+
+
+
+  form[role="search"].navigation-search {
+    --icon-size: 21px;
+  }
+
+  form[role="search"] .navigation-search-input {
+    min-height: 28px;
+    --field-padding: 3px 8px;
+  }
+}
+
+/* Закрытие занимает левую колонку; имя и команды материала справа от неё находятся в разных строках. */
+.docs-header {
+  position: relative;
+  --docs-header-inset: 20px;
+  --docs-close-width: 24px;
+  --docs-button-width: 24px;
+  --docs-button-height: 28px;
+  --docs-title-line-height: calc(18px + var(--font-increase, 0px));
+  --docs-actions-count: 3;
+  --docs-actions-gap: 8px;
+  --docs-actions-width: calc(var(--docs-actions-count) * var(--docs-button-width) + (var(--docs-actions-count) - 1) * var(--docs-actions-gap));
+  padding: 0 var(--docs-header-inset);
+  --docs-control-shadow: drop-shadow(0 0 3px var(--bar)) drop-shadow(0 0 1px var(--bar));
+  user-select: none;
+}
+
+.docs-header:where(:not([hidden])) {
+  display: grid;
+  grid-template-columns: var(--docs-close-width) minmax(0, 1fr) var(--docs-actions-width);
+  column-gap: 4px;
+  row-gap: 0;
+}
+
+/* Popup повторно использует молекулу пути с атомами формы, без стилей ShadowRoot настроек. */
+.navigation-popup .organization-control {
+  --stack-gap: 6px;
+  padding: 16px;
+}
+
+.navigation-popup .organization-control input {
+  width: 100%;
+  min-height: 44px;
+}
+
+.navigation-popup .organization-control small {
+  font-size: calc(10px + var(--font-increase, 0px));
+  line-height: 1.5;
+}
+
+.navigation-popup .organization-status:empty {
+  display: none;
+}
+
+.navigation-popup .organization-actions {
+  justify-content: flex-end;
+}
+
+.navigation-popup .organization-actions button {
+  width: 44px;
+  height: 44px;
+  --icon-size: 21px;
+}
+
+.navigation-popup .organization-actions button:is(:hover, :focus-visible) {
+  color: var(--strong);
+}
+
+.docs-header>.docs-title-group {
+  position: relative;
+  grid-column: 2 / -1;
+  grid-row: 1;
+  display: block;
+  padding-block-start: 4px;
+  line-height: var(--docs-title-line-height);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.docs-header #docs-title>.node-label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.docs-header .docs-version {
+  flex: none;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.docs-header>.docs-reading-controls {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  margin-block-end: 0px;
+  z-index: 1;
+}
+
+.docs-title-group a[href] {
+  pointer-events: auto;
+}
+
+.docs-header>#docs-close {
+  position: relative;
+  z-index: 1;
+}
+
+.docs-header button {
+  flex: none;
+  min-width: var(--docs-button-width);
+  min-height: var(--docs-button-height);
+  width: var(--docs-button-width);
+  height: var(--docs-button-height);
+}
+
+.docs-header>#docs-close {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: var(--docs-close-width);
+  height: 100%;
+}
+
+.docs-header #source-retry-action {
+  width: auto;
+  padding-inline: 6px;
+  white-space: nowrap;
+}
+
+.docs-header button .control-icon,
+.docs-header button .source-retry-label {
+  filter: var(--docs-control-shadow);
+}
+
+.docs-header>.docs-actions {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--docs-header-inset);
+  transform: translateY(-50%);
+  z-index: 2;
+  width: var(--docs-actions-width);
+  max-width: calc(100% - var(--docs-header-inset) * 2 - var(--docs-close-width) - 4px);
+  min-width: 0;
+  --control-gap: var(--docs-actions-gap);
+  justify-content: flex-start;
+  pointer-events: auto;
+}
+
+.docs-header :is(.docs-actions, .docs-reading-controls)>li {
+  flex: none;
+}
+
+.docs-close-narrow {
+  display: none;
+}
+
+.docs-header .docs-reading-controls button[data-step-available="false"] {
+  opacity: .4;
+}
+
+.docs-header>.navigation-status {
+  position: absolute;
+  top: 100%;
+  inset-inline: 12px;
+  z-index: 3;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bar);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.navigation-undo {
+  flex: none;
+  --control-padding: 6px 4px;
+  --control-border: 0;
+  --control-background: transparent;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+@media (min-width: 761px) and (hover: hover) and (pointer: fine) {
+  .docs-header .docs-actions>li {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .docs-header:hover .docs-actions>li,
+  .docs-header:has(:focus-visible) .docs-actions>li {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 760px),
+(pointer: coarse) {
+  .docs-header {
+    --docs-header-inset: 12px;
+    --docs-close-width: 44px;
+    --docs-button-width: 44px;
+    --docs-button-height: 32px;
+    --docs-title-line-height: calc(20px + var(--font-increase, 0px));
+    --docs-actions-gap: 4px;
+    --icon-size: 21px;
+  }
+}
+
+/* Нижнее размещение единственных настроек определяет компактный набор и в широком PiP. */
+html[data-preferences-placement="footer"] .docs-header {
+  --docs-header-inset: 12px;
+  --docs-close-width: 44px;
+  --docs-button-width: 44px;
+  --docs-button-height: 32px;
+  --docs-title-line-height: calc(20px + var(--font-increase, 0px));
+  --docs-actions-gap: 4px;
+  --docs-actions-count: 2;
+  --icon-size: 21px;
+}
+
+html[data-preferences-placement="footer"] .docs-actions>li:has(>#docs-link-mode) {
+  display: none;
+}
+
+.docs-header .control-icon {
+  --icon-size: inherit;
+}
+
+/* Закреплённый вид различается основным Doc/Code, маленький pin не меняет размер кнопки. */
+.mode-pin-symbol {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.mode-pin-badge {
+  position: absolute;
+  inset-inline-end: -4px;
+  inset-block-end: -3px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bar);
+  width: 10px;
+  height: 10px;
+}
+
+.docs-header .mode-pin-badge .control-icon {
+  --icon-size: 9px;
+}
+
+@media (max-width: 760px),
+(pointer: coarse) {
+  .mode-pin-badge {
+    width: 12px;
+    height: 12px;
+  }
+
+  .docs-header .mode-pin-badge .control-icon {
+    --icon-size: 11px;
+  }
+}
+
+@media (max-width: 760px) {
+  .docs-close-wide {
+    display: none;
+  }
+
+  .docs-close-narrow {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .docs-actions>li {
+    transition: opacity 160ms;
+  }
+}
+
+/* Поля текста и выбора используют размеры преференсов во всех всплывающих экранах. */
+.navigation-popup input.field:is([type="text"], [type="search"], [type="number"]),
+.navigation-popup select.field {
+  --field-padding: 3px 8px;
+  min-height: 28px;
+  font: inherit;
+}
+
+.navigation-search {
+  font-size: calc(12px + var(--font-increase, 0px));
+}
+
+.navigation-search-actions {
+  flex-wrap: nowrap;
+}
+
+.catalog-search-bar {
+  position: sticky;
+  inset-block-start: 0;
+  left: 0;
+  margin-left: 0;
+  margin-right: auto;
+  z-index: 3;
+  background: var(--bar);
+  border-bottom: 1px solid var(--line);
+}
+
+.catalog-search-current {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}

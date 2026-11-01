@@ -1,0 +1,19 @@
+{
+  "markdown": {
+    "async": false,
+    "gfm": true
+  },
+  "sanitizer": {
+    "inPlace": true,
+    "allowedTags": [
+      "a", "b", "blockquote", "br", "caption", "code", "dd", "del", "div", "dl", "dt",
+      "em", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "kbd", "li", "ol", "p",
+      "pre", "s", "samp", "small", "span", "strong", "sub", "sup", "table", "tbody",
+      "td", "tfoot", "th", "thead", "tr", "ul"
+    ],
+    "allowedAttributes": ["href", "title", "id", "name", "start", "align", "colspan", "rowspan", "data-document-image"],
+    "allowAriaAttributes": false,
+    "allowDataAttributes": false,
+    "sanitizeDom": true
+  }
+}

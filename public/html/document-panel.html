@@ -1,0 +1,223 @@
+<dialog
+  id              = "hxdoc"
+  class           = "docs-panel surface"
+  aria-labelledby = "docs-title"
+>
+  <div
+    id               = "docs-resize"
+    class            = "docs-resize"
+    role             = "separator"
+    tabindex         = "0"
+    aria-label       = "Resize documentation"
+    aria-orientation = "vertical"
+    aria-controls    = "hxdoc"
+    aria-valuemin    = "25"
+    aria-valuemax    = "85"
+    aria-valuenow    = "50"
+  ></div>
+  <header class="docs-header docs-heading control-row bar">
+    <button
+      type         = "button"
+      id           = "docs-close"
+      class        = "icon-button muted"
+      aria-label   = "Close"
+      data-tooltip = "Close · Q / Esc"
+    >
+      <span class="docs-close-narrow" data-control="close-info-left"></span>
+      <span class="docs-close-wide" data-control="close-info-right"></span>
+    </button>
+    <hgroup class="docs-title-group">
+      <h2 id="docs-title"></h2>
+      <p
+        id    = "docs-version"
+        class = "docs-version muted"
+        hidden
+      ></p>
+    </hgroup>
+    <menu
+      class      = "docs-reading-controls plain-list control-row"
+      aria-label = "Material commands"
+    >
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-history-back"
+          class             = "icon-button muted"
+          aria-label        = "Back"
+          aria-keyshortcuts = "Z"
+          data-tooltip      = "Back · Z"
+          disabled
+        >
+          <span data-control="history-back"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-history-forward"
+          class             = "icon-button muted"
+          aria-label        = "Forward"
+          aria-keyshortcuts = "X"
+          data-tooltip      = "Forward · X"
+          disabled
+        >
+          <span data-control="history-forward"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type          = "button"
+          id            = "docs-history-manual"
+          class         = "icon-button muted"
+          aria-label    = "Add file to history"
+          data-tooltip  = "Add file to history"
+          hidden
+          disabled
+        >
+          <span data-control="history-add"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-refresh"
+          class             = "icon-button muted"
+          aria-label        = "Refresh material"
+          aria-keyshortcuts = "C"
+          data-tooltip      = "Refresh · C"
+        >
+          <span data-control="refresh-file"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type          = "button"
+          id            = "document-mode"
+          class         = "document-mode icon-button muted"
+          data-mode     = "html"
+          aria-label    = "Show source"
+          data-tooltip  = "Show source"
+          hidden
+        >
+          <span class="mode-source" data-control="code"></span>
+          <span class="mode-html" data-control="html"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type              = "button"
+          id                = "source-retry-action"
+          class             = "source-retry-action icon-button muted"
+          aria-keyshortcuts = "R"
+          hidden
+        >
+          <span data-control="source-retry"></span>
+          <span class="source-retry-label"></span>
+        </button>
+      </li>
+    </menu>
+    <menu
+      id         = "docs-actions"
+      class      = "docs-actions plain-list control-row"
+      aria-label = "Links and collections"
+    >
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-link-mode"
+          class             = "icon-button muted"
+          aria-label        = "Link mode"
+          aria-keyshortcuts = "B"
+        >
+          <span data-control="link-internal"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-bookmarks"
+          class             = "icon-button muted"
+          aria-label        = "Bookmarks"
+          aria-keyshortcuts = "B"
+          data-tooltip      = "Bookmarks · B"
+        >
+          <span data-control="bookmarks"></span>
+        </button>
+      </li>
+      <li>
+        <button
+          type              = "button"
+          id                = "docs-search"
+          class             = "icon-button muted"
+          aria-label        = "Search"
+          aria-keyshortcuts = "F"
+          data-tooltip      = "Search · F"
+        >
+          <span data-control="search"></span>
+        </button>
+      </li>
+    </menu>
+    <p
+      id    = "navigation-status"
+      class = "navigation-status muted"
+      role  = "status"
+      hidden
+    ></p>
+  </header>
+  <div
+    id     = "document-toolbar"
+    class  = "document-toolbar"
+    hidden
+  >
+    <div
+      id         = "document-tabs"
+      class      = "document-tabs segmented bar"
+      role       = "tablist"
+      aria-label = "Repository documents"
+    ></div>
+    <div
+      id         = "source-tabs"
+      class      = "segmented bar"
+      role       = "tablist"
+      aria-label = "File view"
+      hidden
+    >
+      <button
+        type             = "button"
+        id               = "source-tab-documentation"
+        role             = "tab"
+        data-source-tab  = "documentation"
+        aria-controls    = "docs-body"
+        aria-selected    = "true"
+      >
+        DOCUMENTATION
+      </button>
+      <button
+        type             = "button"
+        id               = "source-tab-code"
+        role             = "tab"
+        data-source-tab  = "source"
+        aria-controls    = "docs-body"
+        aria-selected    = "false"
+      >
+        SOURCE CODE
+      </button>
+    </div>
+  </div>
+  <div
+    id       = "docs-body"
+    class    = "docs-body"
+    tabindex = "0"
+  >
+    <div id="docs-state"></div>
+    <article id="docs-document" aria-label="Document" hidden></article>
+    <section id="source-host" aria-label="Source code" hidden></section>
+  </div>
+</dialog>
+<dialog
+  id         = "navigation-popup"
+  class      = "navigation-popup surface primary"
+  aria-label = "History"
+>
+  <div id="navigation-content"></div>
+</dialog>

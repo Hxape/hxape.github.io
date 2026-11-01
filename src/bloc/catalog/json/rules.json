@@ -1,0 +1,13 @@
+{
+  "documentTypes": ["README", "CONTRIBUTING", "AGENTS", "LICENSE"],
+  "directoryDocumentTypes": ["README", "AGENTS"],
+  "navigationKeys": {
+    "KeyW": "ArrowUp",
+    "KeyS": "ArrowDown",
+    "KeyA": "ArrowLeft",
+    "KeyD": "ArrowRight"
+  },
+  "captionAttributes": ["data-directory-name", "data-directory-path", "data-file-path", "data-symbol-path"],
+  "captionTags": ["span", "mark", "b", "i", "strong", "em", "code", "small", "s", "u", "a"],
+  "captionLinkAttributes": ["href", "title"]
+}

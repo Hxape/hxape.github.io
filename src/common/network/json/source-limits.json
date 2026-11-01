@@ -1,0 +1,21 @@
+{
+  "maxSourceBytes": 1048576,
+  "maxMetadataBytes": 65536,
+  "privateRequest": {
+    "maxChecksumBytes": 256,
+    "maxSnapshotBytes": 4194304,
+    "maxDocumentBytes": 1048576,
+    "maxErrorBytes": 4096,
+    "maxJsonBytes": 2097152
+  },
+  "publicCache": {
+    "maxEntries": 8,
+    "maxBytes": 4194304,
+    "ttlMs": 120000
+  },
+  "privateCache": {
+    "maxEntries": 8,
+    "maxBytes": 4194304,
+    "ttlMs": 120000
+  }
+}

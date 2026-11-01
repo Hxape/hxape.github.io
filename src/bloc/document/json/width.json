@@ -1,0 +1,9 @@
+{
+  "initial": 0.5,
+  "maximum": 0.85,
+  "minimumPixels": 280,
+  "minimumFraction": 0.4,
+  "keyStepPixels": 24,
+  "largeKeyStepPixels": 80,
+  "ariaWidth": "{percent}% width"
+}

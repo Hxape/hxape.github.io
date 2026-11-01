@@ -1,0 +1,29 @@
+{
+  "themeDefault": "light",
+  "accentColors": {
+    "light": "#c33f4b",
+    "dark": "#27e69b"
+  },
+  "markColors": {
+    "light": "#899990",
+    "dark": "#8b94a3"
+  },
+  "iconVisibility": {
+    "repositories": false,
+    "directories": false,
+    "files": true,
+    "symbols": true
+  },
+  "fontIncrease": {
+    "default": 0,
+    "min": 0,
+    "max": 2,
+    "step": 1
+  },
+  "holdDuration": {
+    "default": 500,
+    "min": 250,
+    "max": 500,
+    "step": 25
+  }
+}
